@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/radius.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-tokens.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-assets.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/base.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/styles.css">
+<script src="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>body{margin:0;background:#EDEBE7;display:flex;justify-content:center;align-items:flex-start;padding:32px 0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}*{box-sizing:border-box}a{color:#4285F4}a:hover{color:#1A1A1A}::-webkit-scrollbar{width:0}@keyframes rdSheet{from{transform:translateY(24px)}to{transform:translateY(0)}}@keyframes rdToast{0%{opacity:0}10%{opacity:1}82%{opacity:1}100%{opacity:0}}@keyframes rdPulse{0%,100%{opacity:1}50%{opacity:0.35}}</style>
+</helmet>
+<div style="width:390px;height:844px;background:#FAFAFA;display:flex;flex-direction:column;overflow:hidden;position:relative;border-radius:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+
+<div style="flex-shrink:0;background:#FFFFFF"><x-import component-from-global-scope="RapidoDesignSystem_ef9315.StatusBar" hint-size="390px,54px"></x-import></div>
+
+<div style="flex-shrink:0;background:#FFFFFF;display:flex;align-items:center;justify-content:space-between;padding:4px 16px 12px">
+  <a href="3. Rider Home Dues Popup.dc.html" aria-label="Back" style="width:44px;height:44px;margin-left:-11px;text-decoration:none;display:flex;align-items:center;justify-content:center;cursor:pointer">
+    <i data-lucide="chevron-left" style="width:24px;height:24px;color:#1A1A1A"></i>
+  </a>
+  <div style="display:flex;align-items:center;gap:6px">
+    <span style="font-weight:800;font-size:22px;line-height:1;letter-spacing:-1px;color:#1A1A1A">rapido</span>
+    <span style="width:6px;height:6px;border-radius:50%;background:#FDC830"></span>
+  </div>
+  <button type="button" aria-label="Notifications" style="width:44px;height:44px;margin-right:-11px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative">
+    <i data-lucide="bell" style="width:21px;height:21px;color:#1A1A1A"></i>
+    <span style="position:absolute;top:11px;right:12px;width:7px;height:7px;border-radius:50%;background:#EA4335;box-shadow:0 0 0 2px #FFFFFF"></span>
+  </button>
+</div>
+
+<div style="flex-shrink:0;background:#FFFFFF;padding:0 16px 14px">
+  <span style="font-weight:700;font-size:24px;line-height:32px;color:#1A1A1A">Dues</span>
+</div>
+
+<div style="flex:1;overflow-y:auto;padding:16px 16px 24px;display:flex;flex-direction:column;gap:12px">
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="background:#FFF8E1;border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:8px">
+        <span style="font-weight:600;font-size:11px;line-height:14px;letter-spacing:0.5px;color:#8A6400">PENDING AMOUNT</span>
+        <span style="font-weight:700;font-size:28px;line-height:34px;color:#1A1A1A;font-variant-numeric:tabular-nums">₹120</span>
+        <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-wrap:pretty">Your ride is complete — this isn't waived. We're retrying automatically, or you can settle it now.</span>
+        <div style="display:flex;align-items:center;gap:6px;padding-top:2px">
+          <i data-lucide="shield-check" style="width:14px;height:14px;color:#666666;flex-shrink:0"></i>
+          <span style="font-weight:400;font-size:12px;line-height:16px;color:#666666">Verified with your pickup OTP</span>
+        </div>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;padding:16px;display:flex;flex-direction:column;gap:14px">
+        <span style="font-weight:700;font-size:14px;line-height:18px;color:#1A1A1A">Trip status</span>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ steps }}" as="step" hint-placeholder-count="4">
+            <div style="display:flex;gap:12px;align-items:stretch">
+              <div style="width:16px;display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+                <span style="width:10px;height:10px;border-radius:50%;background:{{ step.dotBg }};box-shadow:{{ step.dotRing }};margin-top:4px;flex-shrink:0"></span>
+                <span style="{{ step.lineStyle }}"></span>
+              </div>
+              <div style="{{ step.bodyStyle }}">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+                  <span style="font-weight:600;font-size:13px;line-height:17px;color:{{ step.titleColor }}">{{ step.title }}</span>
+                  <span style="font-weight:400;font-size:12px;line-height:16px;color:#888888;white-space:nowrap;flex-shrink:0">{{ step.time }}</span>
+                </div>
+                <span style="font-weight:400;font-size:12px;line-height:17px;color:#888888;text-wrap:pretty">{{ step.detail }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <button type="button" onClick="{{ pay }}" style="{{ primaryBtn }}" style-active="background:#E5A800">{{ payLabel }}</button>
+      <button type="button" onClick="{{ openWhy }}" style="{{ linkBtn }}">Why is this pending?</button>
+
+      <span style="font-weight:600;font-size:10px;line-height:1;letter-spacing:1px;color:#888888;padding:10px 0 0">DUES HISTORY</span>
+      <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;overflow:hidden">
+        <sc-for list="{{ history }}" as="item" hint-placeholder-count="3">
+          <div style="{{ item.wrapStyle }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                <span style="font-weight:600;font-size:14px;line-height:18px;color:#1A1A1A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ item.trip }}</span>
+                <span style="font-weight:400;font-size:12px;line-height:16px;color:#888888">{{ item.date }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
+                <span style="font-weight:700;font-size:14px;line-height:18px;color:#1A1A1A;font-variant-numeric:tabular-nums">{{ item.amount }}</span>
+                <span style="border-radius:999px;padding:3px 8px;font-size:10px;font-weight:700;line-height:13px;background:#E8F5E9;color:#1E7B37">Settled</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+</div>
+
+<div style="flex-shrink:0;background:#FFFFFF;box-shadow:inset 0 1px 0 #EBEBEB;display:flex;padding:8px 0 6px">
+  <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+    <button type="button" onClick="{{ item.select }}" style="flex:1;border:0;background:transparent;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;position:relative">
+      <i data-lucide="{{ item.icon }}" style="width:21px;height:21px;color:{{ item.color }}"></i>
+      <span style="font-size:10px;line-height:1;font-weight:{{ item.weight }};color:{{ item.color }}">{{ item.label }}</span>
+      <sc-if value="{{ item.showDot }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;top:2px;right:20px;width:8px;height:8px;border-radius:999px;background:#EA4335"></span>
+      </sc-if>
+    </button>
+  </sc-for>
+</div>
+<div style="height:22px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:134px;height:5px;border-radius:999px;background:#1A1A1A"></div></div>
+
+<sc-if value="{{ whyOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeWhy }}" style="position:absolute;inset:0;background:rgba(26,26,26,0.32);display:flex;align-items:flex-end;justify-content:center">
+    <div style="width:100%;background:#FFFFFF;border-radius:16px 16px 0 0;padding:12px 16px 22px;display:flex;flex-direction:column;gap:12px;animation:rdSheet 200ms ease">
+      <div style="width:38px;height:4px;border-radius:999px;background:#E8E8E8;align-self:center"></div>
+      <span style="font-weight:700;font-size:18px;line-height:24px;color:#1A1A1A">Why is this pending?</span>
+      <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-wrap:pretty">Your payment couldn't be completed at the end of the trip because of a connection issue. The ride itself finished normally, so the fare is still owed.</span>
+      <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-wrap:pretty">Your captain confirmed the due using the OTP you shared at pickup, so it is tied to this trip only. Rapido keeps retrying the payment until 6:15 PM today. Paying now closes it right away.</span>
+      <button type="button" onClick="{{ closeWhy }}" style="{{ secondaryBtn }}" style-active="background:#F5F5F5">Got it</button>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ paySheetOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background:rgba(26,26,26,0.44);display:flex;align-items:flex-end;justify-content:center">
+  <div style="width:100%;background:#FFFFFF;border-radius:16px 16px 0 0;padding:12px 16px 22px;display:flex;flex-direction:column;gap:14px;animation:rdSheet 200ms ease">
+    <div style="width:38px;height:4px;border-radius:999px;background:#E8E8E8;align-self:center"></div>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+      <span style="font-weight:700;font-size:18px;line-height:24px;color:#1A1A1A">Clear this due</span>
+      <span style="font-weight:800;font-size:20px;line-height:1;color:#1A1A1A;font-variant-numeric:tabular-nums">{{ payTotal }}</span>
+    </div>
+    <span style="font-weight:400;font-size:13px;line-height:19px;color:#666666;text-wrap:pretty">Paying now closes this due right away. Automatic retries stop.</span>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{ methods }}" as="method" hint-placeholder-count="3">
+        <button type="button" onClick="{{ method.pick }}" style="{{ method.style }}">
+          <span style="{{ method.glyphStyle }}"></span>
+          <span style="flex:1;text-align:left;font-weight:600;font-size:14px;line-height:18px;color:#1A1A1A">{{ method.label }}</span>
+          <span style="{{ method.tickStyle }}"></span>
+        </button>
+      </sc-for>
+    </div>
+    <button type="button" onClick="{{ confirmPay }}" style="{{ primaryBtn }}" style-active="background:#E5A800">{{ payConfirmLabel }}</button>
+    <button type="button" onClick="{{ closePay }}" style="width:100%;min-height:44px;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;line-height:18px;color:#666666;cursor:pointer">Go back</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:16px;right:16px;bottom:100px;background:#1A1A1A;border-radius:8px;padding:12px 14px;animation:rdToast 2.6s ease forwards">
+    <span style="font-weight:500;font-size:13px;line-height:18px;color:#FFFFFF">{{ toast }}</span>
+  </div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:908},&quot;amount&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;₹120&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hardBlock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;}}">
+const STEPS = [
+  {title:"Trip completed", time:"9:34 AM", detail:"Koramangala 5th Block → HSR Layout Sector 2", done:true},
+  {title:"Payment attempted", time:"9:34 AM", detail:"It didn't go through — a connection issue on your phone.", done:true},
+  {title:"Captain confirmed as due", time:"9:36 AM", detail:"Verified with the pickup OTP you shared.", done:true},
+  {title:"Retrying until 6:15 PM", time:"Now", detail:"You can pay any time before this. Nothing else is needed from you.", current:true}
+];
+const HISTORY = [
+  {trip:"Indiranagar → MG Road", date:"28 Aug, 8:30 PM", amount:"₹220"},
+  {trip:"BTM Layout → Silk Board", date:"21 Aug, 7:05 PM", amount:"₹95"},
+  {trip:"Jayanagar → Koramangala", date:"14 Aug, 1:40 PM", amount:"₹180"}
+];
+
+const PAY_METHODS = [
+  {id:"upi", label:"UPI · 9845* * *210", icon:"smartphone"},
+  {id:"card", label:"Card ending 3467", icon:"credit-card"},
+  {id:"netbanking", label:"Net banking", icon:"landmark"}
+];
+const mask = (name, color, size) =>
+  "width:" + size + "px;height:" + size + "px;flex-shrink:0;background:" + color
+  + ";-webkit-mask:url('https://unpkg.com/lucide-static@0.469.0/icons/" + name + ".svg') center/contain no-repeat"
+  + ";mask:url('https://unpkg.com/lucide-static@0.469.0/icons/" + name + ".svg') center/contain no-repeat";
+
+class Component extends DCLogic {
+  state = {paySheet: false, method: "upi", why: false, toast: null};
+
+  icons() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidMount() {
+    this.icons();
+    this._i = setInterval(() => this.icons(), 400);
+  }
+  componentDidUpdate() { this.icons(); }
+  componentWillUnmount() { clearInterval(this._i); clearTimeout(this._toast); }
+
+  say(msg) {
+    clearTimeout(this._toast);
+    this.setState({toast: msg});
+    this._toast = setTimeout(() => this.setState({toast: null}), 2600);
+  }
+
+  btn(kind) {
+    const base = "width:100%;min-height:48px;border-radius:12px;font-family:inherit;font-size:15px;font-weight:700;line-height:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 180ms ease;padding:0 16px;";
+    if (kind === "primary") return base + "border:0;background:#FDC830;color:#1A1A1A;";
+    if (kind === "secondary") return base + "border:1px solid #1A1A1A;background:transparent;color:#1A1A1A;";
+    return "width:100%;min-height:44px;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;line-height:18px;color:#4285F4;cursor:pointer;";
+  }
+
+  renderVals() {
+    const amount = this.props.amount ?? "₹120";
+
+    return {
+      steps: STEPS.map((s, i) => ({
+        ...s,
+        dotBg: s.done ? "#34A853" : (s.current ? "#FDC830" : "#FFFFFF"),
+        dotRing: s.done || s.current ? "none" : "inset 0 0 0 1.5px #D1D1D1",
+        titleColor: "#1A1A1A",
+        lineStyle: i < STEPS.length - 1
+          ? "flex:1;border-left:1.5px " + (s.done ? "solid #C8E6CD" : "dashed #D1D1D1") + ";margin:4px 0 0;"
+          : "display:none;",
+        bodyStyle: "flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;padding:0 0 " + (i < STEPS.length - 1 ? "18px" : "0")
+      })),
+      history: HISTORY.map((h, i) => ({
+        ...h,
+        wrapStyle: "padding:13px 16px;" + (i < HISTORY.length - 1 ? "box-shadow:inset 0 -1px 0 #F0F0F0;" : "")
+      })),
+      navItems: [
+        {icon:"bike", label:"Ride"},
+        {icon:"receipt-text", label:"Dues", active:true, showDot:true},
+        {icon:"layout-grid", label:"All Services"},
+        {icon:"plane", label:"Travel"},
+        {icon:"user-round", label:"Profile"}
+      ].map(n => ({
+        ...n,
+        color: n.active ? "#E5A800" : "#888888",
+        weight: n.active ? 700 : 400,
+        showDot: !!n.showDot,
+        select: n.label === "Ride" ? () => { window.location.href = "Rider Home Dues Popup.dc.html"; } : () => {}
+      })),
+      primaryBtn: this.btn("primary"),
+      secondaryBtn: this.btn("secondary"),
+      linkBtn: this.btn("link"),
+      payLabel: "Pay " + amount + " now",
+      pay: () => this.setState({paySheet: true, method: "upi"}),
+      paySheetOpen: this.state.paySheet,
+      payTotal: amount,
+      payConfirmLabel: "Pay " + amount,
+      methods: PAY_METHODS.map(m => {
+        const on = m.id === this.state.method;
+        return {
+          ...m,
+          style: "width:100%;min-height:52px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 14px;cursor:pointer;font-family:inherit;background:#FFFFFF;"
+            + (on ? "border:1px solid #1A1A1A;" : "border:1px solid #E8E8E8;"),
+          glyphStyle: mask(m.icon, on ? "#1A1A1A" : "#888888", 18),
+          tickStyle: on ? mask("check", "#1A1A1A", 16) : "display:none",
+          pick: () => this.setState({method: m.id})
+        };
+      }),
+      closePay: () => this.setState({paySheet: false}),
+      confirmPay: () => { window.location.href = "7. Rider Dues Cleared.dc.html?amount=" + amount.replace(/[^0-9]/g, ""); },
+      whyOpen: this.state.why,
+      openWhy: () => this.setState({why: true}),
+      closeWhy: () => this.setState({why: false}),
+      toast: this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

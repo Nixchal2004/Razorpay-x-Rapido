@@ -1,0 +1,12 @@
+/* Rapido DS — Spacing. 10-step scale from the "Rapido Spacing" variable collection. */
+:root{
+  --space-2:2px;--space-4:4px;--space-8:8px;--space-12:12px;--space-16:16px;
+  --space-20:20px;--space-24:24px;--space-32:32px;--space-40:40px;--space-48:48px;
+
+  /* In-use aliases observed in the rider screens */
+  --screen-gutter:16px;
+  --card-padding:16px;
+  --card-gap:12px;
+  --section-gap:24px;
+  --tap-target-min:44px;
+}

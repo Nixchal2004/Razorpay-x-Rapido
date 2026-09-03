@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/radius.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-tokens.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-assets.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/base.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/styles.css">
+<script src="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>body{margin:0;background:#EDEBE7;display:flex;justify-content:center;align-items:flex-start;padding:32px 0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}*{box-sizing:border-box}a{color:#4285F4}a:hover{color:#1A1A1A}::-webkit-scrollbar{width:0}@keyframes fwIn{from{opacity:0;transform:scale(0.97)}to{opacity:1;transform:scale(1)}}@keyframes fwSheet{from{transform:translateY(24px)}to{transform:translateY(0)}}@keyframes fwToast{0%{opacity:0}10%{opacity:1}82%{opacity:1}100%{opacity:0}}</style>
+</helmet>
+<div style="width:390px;height:844px;background:#FFFFFF;display:flex;flex-direction:column;overflow:hidden;position:relative;border-radius:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+
+<div style="flex-shrink:0;background:#FFFFFF"><x-import component-from-global-scope="RapidoDesignSystem_ef9315.StatusBar" hint-size="390px,54px"></x-import></div>
+
+<div style="flex:1;min-height:0;position:relative;display:flex;flex-direction:column">
+  <div style="flex:1;min-height:0;background:#DDE3E0 url('assets/map-bangalore.png') center/cover no-repeat"></div>
+  <div style="flex-shrink:0;background:#FFFFFF;padding:14px 16px 10px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:10px;background:#F5F5F5;border-radius:12px;padding:13px 14px">
+      <i data-lucide="search" style="width:18px;height:18px;color:#888888;flex-shrink:0"></i>
+      <span style="font-weight:600;font-size:14px;line-height:18px;color:#666666">Where do you want to go?</span>
+    </div>
+  </div>
+
+  <div style="{{ overlayStyle }}">
+    <div style="width:100%;background:#FFFFFF;border-radius:16px;padding:24px 20px 20px;display:flex;flex-direction:column;gap:14px;position:relative;box-shadow:0 8px 24px rgba(0,0,0,0.051);animation:fwIn 200ms ease">
+      <button type="button" onClick="{{ dismiss }}" aria-label="Remind me later" style="{{ closeStyle }}">
+        <i data-lucide="x" style="width:16px;height:16px;color:#AAAAAA"></i>
+      </button>
+
+      <div style="width:56px;height:56px;border-radius:999px;background:#FFF8E1;display:flex;align-items:center;justify-content:center">
+        <i data-lucide="alert-triangle" style="width:28px;height:28px;color:#B98A00"></i>
+      </div>
+
+      <span style="font-weight:700;font-size:24px;line-height:30px;color:#1A1A1A;text-wrap:pretty">{{ headline }}</span>
+      <span style="font-weight:400;font-size:15px;line-height:22px;color:#4A4A4A;text-wrap:pretty">{{ supporting }}</span>
+      <span style="font-weight:700;font-size:15px;line-height:22px;color:#1A1A1A">{{ instruction }}</span>
+
+      <div style="background:#FFF8E1;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ dues }}" as="due" hint-placeholder-count="1">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+              <span style="font-weight:600;font-size:13px;line-height:17px;color:#1A1A1A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ due.route }}</span>
+              <span style="font-weight:400;font-size:12px;line-height:16px;color:#666666">{{ due.date }}</span>
+            </div>
+            <span style="font-weight:700;font-size:14px;line-height:18px;color:#1A1A1A;font-variant-numeric:tabular-nums;flex-shrink:0">{{ due.amount }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:4px;padding-top:2px">
+        <button type="button" onClick="{{ openPay }}" style="{{ primaryBtn }}" style-active="background:#E5A800">{{ payLabel }}</button>
+        <button type="button" onClick="{{ viewFlagged }}" style="{{ linkBtn }}">View flagged dues</button>
+        <button type="button" onClick="{{ dismiss }}" style="{{ laterStyle }}">Remind me later</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="{{ paySheetStyle }}">
+    <div style="width:100%;background:#FFFFFF;border-radius:16px 16px 0 0;padding:12px 16px 22px;display:flex;flex-direction:column;gap:14px;animation:fwSheet 200ms ease">
+      <div style="width:38px;height:4px;border-radius:999px;background:#E8E8E8;align-self:center"></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+        <span style="font-weight:700;font-size:18px;line-height:24px;color:#1A1A1A">Clear your dues</span>
+        <span style="font-weight:800;font-size:20px;line-height:1;color:#1A1A1A;font-variant-numeric:tabular-nums">{{ total }}</span>
+      </div>
+      <span style="font-weight:400;font-size:13px;line-height:19px;color:#666666;text-wrap:pretty">Paying clears the flag on your account. You can book rides right after.</span>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ methods }}" as="method" hint-placeholder-count="3">
+          <button type="button" onClick="{{ method.pick }}" style="{{ method.style }}">
+            <span style="{{ method.glyphStyle }}"></span>
+            <span style="flex:1;text-align:left;font-weight:600;font-size:14px;line-height:18px;color:#1A1A1A">{{ method.label }}</span>
+            <span style="{{ method.tickStyle }}"></span>
+          </button>
+        </sc-for>
+      </div>
+      <button type="button" onClick="{{ confirmPay }}" style="{{ primaryBtn }}" style-active="background:#E5A800">{{ confirmLabel }}</button>
+      <button type="button" onClick="{{ closePay }}" style="{{ linkBtn }}">Go back</button>
+    </div>
+  </div>
+
+  <div style="{{ doneStyle }}">
+    <div style="width:100%;background:#FFFFFF;border-radius:16px;padding:24px 20px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 24px rgba(0,0,0,0.051);animation:fwIn 200ms ease">
+      <div style="width:52px;height:52px;border-radius:999px;background:#E8F5E9;display:flex;align-items:center;justify-content:center">
+        <i data-lucide="check" style="width:26px;height:26px;color:#34A853"></i>
+      </div>
+      <span style="font-weight:700;font-size:20px;line-height:26px;color:#1A1A1A">Dues cleared — flag removed</span>
+      <span style="font-weight:400;font-size:14px;line-height:20px;color:#4A4A4A;text-wrap:pretty">{{ doneNote }}</span>
+      <button type="button" onClick="{{ dismiss }}" style="{{ primaryBtn }}" style-active="background:#E5A800">Book a ride</button>
+    </div>
+  </div>
+</div>
+
+<div style="flex-shrink:0;background:#FFFFFF;box-shadow:inset 0 1px 0 #EBEBEB;display:flex;padding:8px 0 6px">
+  <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+    <button type="button" onClick="{{ item.select }}" style="flex:1;border:0;background:transparent;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;position:relative">
+      <span style="{{ item.glyphStyle }}"></span>
+      <span style="font-size:10px;line-height:1;font-weight:{{ item.weight }};color:{{ item.color }}">{{ item.label }}</span>
+      <span style="{{ item.dotStyle }}"></span>
+    </button>
+  </sc-for>
+</div>
+<div style="height:22px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:134px;height:5px;border-radius:999px;background:#1A1A1A"></div></div>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:16px;right:16px;bottom:100px;background:#1A1A1A;border-radius:8px;padding:12px 14px;animation:fwToast 2.6s ease forwards">
+    <span style="font-weight:500;font-size:13px;line-height:18px;color:#FFFFFF">{{ toast }}</span>
+  </div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:908},&quot;flagCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1,&quot;min&quot;:1,&quot;max&quot;:3,&quot;tsType&quot;:&quot;number&quot;},&quot;flagLimit&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;}}">
+const WORDS = {0:"No", 1:"One", 2:"Two", 3:"Three", 4:"Four", 5:"Five"};
+const DUES = [
+  {route:"BTM Layout → Jayanagar 4th Block", date:"27 Aug, 9:20 PM", amount:"₹95", value:95}
+];
+const METHODS = [
+  {id:"upi", label:"UPI · 9845* * *210", icon:"smartphone"},
+  {id:"card", label:"Card ending 3467", icon:"credit-card"},
+  {id:"wallet", label:"Rapido wallet · ₹40", icon:"wallet"}
+];
+
+const glyph = (name, color, size) =>
+  "width:" + size + "px;height:" + size + "px;flex-shrink:0;background:" + color
+  + ";-webkit-mask:url('https://unpkg.com/lucide-static@0.469.0/icons/" + name + ".svg') center/contain no-repeat"
+  + ";mask:url('https://unpkg.com/lucide-static@0.469.0/icons/" + name + ".svg') center/contain no-repeat";
+
+class Component extends DCLogic {
+  state = {step: "warning", method: "upi", toast: null};
+
+  icons() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidMount() { this.icons(); this._i = setInterval(() => this.icons(), 400); }
+  componentDidUpdate() { this.icons(); }
+  componentWillUnmount() { clearInterval(this._i); clearTimeout(this._toast); }
+
+  say(msg) {
+    clearTimeout(this._toast);
+    this.setState({toast: msg});
+    this._toast = setTimeout(() => this.setState({toast: null}), 2600);
+  }
+
+  btn(kind) {
+    const base = "width:100%;min-height:48px;border-radius:12px;font-family:inherit;font-size:15px;font-weight:700;line-height:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 180ms ease;padding:0 16px;";
+    if (kind === "primary") return base + "border:0;background:#FDC830;color:#1A1A1A;";
+    return "width:100%;min-height:40px;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;line-height:18px;color:#4285F4;cursor:pointer;";
+  }
+
+  overlay(visible, align) {
+    return visible
+      ? "position:absolute;inset:0;background:rgba(26,26,26,0.44);display:flex;align-items:" + align + ";justify-content:center;padding:" + (align === "center" ? "16px" : "0")
+      : "display:none";
+  }
+
+  renderVals() {
+    const flags = this.props.flagCount ?? 1;
+    const limit = this.props.flagLimit ?? 3;
+    const remaining = Math.max(0, limit - flags);
+    const hardGated = remaining === 0;
+    const total = "₹" + DUES.reduce((n, d) => n + d.value, 0);
+    const step = this.state.step;
+
+    return {
+      overlayStyle: this.overlay(step === "warning", "center"),
+      paySheetStyle: this.overlay(step === "pay", "flex-end"),
+      doneStyle: this.overlay(step === "done", "center"),
+      headline: flags + (flags === 1 ? " flag on your account" : " flags on your account"),
+      supporting: hardGated
+        ? "Your account is blocked — you can't book rides until your pending dues are cleared."
+        : WORDS[remaining] + (remaining === 1 ? " more flag" : " more flags")
+          + " will block your account — you won't be able to book rides until it's cleared.",
+      instruction: "Clear your pending dues to keep riding.",
+      dues: DUES,
+      total,
+      payLabel: "Clear " + total + " now",
+      primaryBtn: this.btn("primary"),
+      linkBtn: this.btn("link"),
+      closeStyle: hardGated
+        ? "display:none"
+        : "position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer",
+      laterStyle: hardGated
+        ? "display:none"
+        : "width:100%;min-height:40px;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;line-height:18px;color:#888888;cursor:pointer",
+      methods: METHODS.map(m => {
+        const on = m.id === this.state.method;
+        return {
+          ...m,
+          style: "width:100%;min-height:52px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 14px;cursor:pointer;font-family:inherit;background:#FFFFFF;transition:box-shadow 180ms ease;"
+            + (on ? "border:1px solid #1A1A1A;" : "border:1px solid #E8E8E8;"),
+          glyphStyle: glyph(m.icon, on ? "#1A1A1A" : "#888888", 18),
+          tickStyle: on ? glyph("check", "#1A1A1A", 16) : "display:none",
+          pick: () => this.setState({method: m.id})
+        };
+      }),
+      confirmLabel: "Pay " + total,
+      confirmPay: () => { window.location.href = "7. Rider Dues Cleared.dc.html"; },
+      openPay: () => this.setState({step: "pay"}),
+      closePay: () => this.setState({step: "warning"}),
+      doneNote: "You're all clear. Nothing is pending on your account and you can book rides as usual.",
+      dismiss: () => { this.setState({step: "none"}); this.say("We'll remind you later. Your flag is still active."); },
+      viewFlagged: () => { window.location.href = "4. Rider Dues Dashboard.dc.html#flagged"; },
+      navItems: [
+        {icon:"bike", label:"Ride", active:true},
+        {icon:"receipt-text", label:"Dues", showDot: step !== "done"},
+        {icon:"layout-grid", label:"All Services"},
+        {icon:"plane", label:"Travel"},
+        {icon:"user-round", label:"Profile"}
+      ].map(n => ({
+        ...n,
+        color: n.active ? "#E5A800" : "#888888",
+        weight: n.active ? 700 : 400,
+        glyphStyle: glyph(n.icon, n.active ? "#E5A800" : "#888888", 21),
+        dotStyle: n.showDot
+          ? "position:absolute;top:2px;right:20px;width:8px;height:8px;border-radius:999px;background:#EA4335"
+          : "display:none",
+        select: n.label === "Dues" ? () => { window.location.href = "4. Rider Dues Dashboard.dc.html"; } : () => {}
+      })),
+      toast: this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

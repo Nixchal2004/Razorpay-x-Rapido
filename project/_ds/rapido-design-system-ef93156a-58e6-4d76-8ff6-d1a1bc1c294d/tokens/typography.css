@@ -1,0 +1,44 @@
+/* Rapido DS — Type. 16 named styles, transcribed from the
+   "Rapido DS — Typography" specimen frame. Inter throughout. */
+:root{
+  --font-family-base:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+
+  --font-weight-light:300;
+  --font-weight-regular:400;
+  --font-weight-medium:500;
+  --font-weight-semibold:600;
+  --font-weight-bold:700;
+  --font-weight-extrabold:800;
+
+  --font-size-10:10px;--font-size-11:11px;--font-size-12:12px;--font-size-13:13px;
+  --font-size-14:14px;--font-size-15:15px;--font-size-16:16px;--font-size-18:18px;
+  --font-size-20:20px;--font-size-24:24px;--font-size-28:28px;--font-size-32:32px;
+
+  --line-height-14:14px;--line-height-16:16px;--line-height-18:18px;--line-height-20:20px;
+  --line-height-24:24px;--line-height-28:28px;--line-height-32:32px;--line-height-36:36px;
+
+  --tracking-overline:0.5px;
+  --tracking-eyebrow:1.5px;
+  --tracking-wordmark:-1px;
+}
+
+/* Named text styles */
+.ds-h1{font:var(--font-weight-bold) 28px/36px var(--font-family-base);color:var(--text-primary)}
+.ds-h2{font:var(--font-weight-bold) 24px/32px var(--font-family-base);color:var(--text-primary)}
+.ds-h3{font:var(--font-weight-semibold) 20px/28px var(--font-family-base);color:var(--text-primary)}
+.ds-h4{font:var(--font-weight-semibold) 18px/24px var(--font-family-base);color:var(--text-primary)}
+.ds-body-lg{font:var(--font-weight-regular) 16px/24px var(--font-family-base);color:var(--text-primary)}
+.ds-body-lg-medium{font:var(--font-weight-medium) 16px/24px var(--font-family-base);color:var(--text-primary)}
+.ds-body{font:var(--font-weight-regular) 14px/20px var(--font-family-base);color:var(--text-primary)}
+.ds-body-medium{font:var(--font-weight-medium) 14px/20px var(--font-family-base);color:var(--text-primary)}
+.ds-body-sm{font:var(--font-weight-regular) 12px/16px var(--font-family-base);color:var(--text-primary)}
+.ds-body-sm-medium{font:var(--font-weight-medium) 12px/16px var(--font-family-base);color:var(--text-primary)}
+.ds-caption{font:var(--font-weight-regular) 11px/14px var(--font-family-base);color:var(--text-secondary)}
+.ds-caption-medium{font:var(--font-weight-medium) 11px/14px var(--font-family-base);color:var(--text-secondary)}
+.ds-overline{font:var(--font-weight-semibold) 10px/14px var(--font-family-base);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-tertiary)}
+.ds-button-lg{font:var(--font-weight-semibold) 16px/20px var(--font-family-base)}
+.ds-button{font:var(--font-weight-semibold) 14px/18px var(--font-family-base)}
+.ds-button-sm{font:var(--font-weight-medium) 12px/16px var(--font-family-base)}
+
+/* Brand wordmark — the source renders "rapido" as type, not a logo file */
+.ds-wordmark{font-family:var(--font-family-base);font-weight:800;font-size:32px;line-height:1;letter-spacing:var(--tracking-wordmark);color:var(--rapido-black)}

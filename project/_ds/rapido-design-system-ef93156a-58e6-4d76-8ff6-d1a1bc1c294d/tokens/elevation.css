@@ -1,0 +1,12 @@
+/* Rapido DS — Elevation & borders.
+   The kit is almost entirely flat: surfaces are separated by 1px hairlines, not
+   shadows. Exactly one soft shadow appears in the source (rgba(0,0,0,0.051)),
+   used for floating map controls. */
+:root{
+  --hairline:1px solid var(--border-card);
+  --hairline-strong:1px solid var(--border-default);
+  --elevation-0:none;
+  --elevation-float:0 2px 8px rgba(0,0,0,0.051);
+  --elevation-sheet:0 -2px 12px rgba(0,0,0,0.051);
+  --divider-inset:16px;
+}

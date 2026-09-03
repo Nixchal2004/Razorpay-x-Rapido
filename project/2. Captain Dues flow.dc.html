@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/radius.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-tokens.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-assets.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/base.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/styles.css">
+<script src="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>body{margin:0;background:#EDEBE7;display:flex;justify-content:center;align-items:flex-start;padding:32px 0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}*{box-sizing:border-box}a{color:#4285F4}a:hover{color:#1A1A1A}::-webkit-scrollbar{width:0}@keyframes duesToast{0%{opacity:0;transform:translateY(8px)}12%{opacity:1;transform:translateY(0)}80%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(4px)}}</style>
+</helmet>
+<div style="width:390px;height:844px;background:#FAFAFA;display:flex;flex-direction:column;overflow:hidden;position:relative;border-radius:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+
+<div style="flex-shrink:0;background:#FFFFFF"><x-import component-from-global-scope="RapidoDesignSystem_ef9315.StatusBar" hint-size="390px,54px"></x-import></div>
+
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+  <div style="flex-shrink:0;background:#FFFFFF;display:flex;align-items:center;justify-content:space-between;padding:4px 16px 12px">
+    <button type="button" aria-label="Menu" style="width:44px;height:44px;margin-left:-11px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      <span style="width:20px;height:14px;display:flex;flex-direction:column;justify-content:space-between">
+        <span style="height:2.2px;background:#1A1A1A;border-radius:2px;display:block"></span>
+        <span style="height:2.2px;background:#1A1A1A;border-radius:2px;display:block"></span>
+        <span style="height:2.2px;background:#1A1A1A;border-radius:2px;display:block"></span>
+      </span>
+    </button>
+    <div style="display:flex;align-items:baseline;gap:6px">
+      <span style="font-weight:800;font-size:22px;line-height:1;letter-spacing:-1px;color:#1A1A1A">rapido</span>
+      <span style="width:6px;height:6px;border-radius:50%;background:#FDC830;align-self:center"></span>
+      <span style="font-weight:600;font-size:11px;line-height:1;letter-spacing:1.2px;color:#666666">CAPTAIN</span>
+    </div>
+    <button type="button" aria-label="Notifications" style="width:44px;height:44px;margin-right:-11px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative">
+      <i data-lucide="bell" style="width:21px;height:21px;color:#1A1A1A"></i>
+      <span style="position:absolute;top:11px;right:12px;width:7px;height:7px;border-radius:50%;background:#EA4335;box-shadow:0 0 0 2px #FFFFFF"></span>
+    </button>
+  </div>
+
+  <div style="flex-shrink:0;background:#FFFFFF;padding:0 16px 0">
+    <div style="font-weight:700;font-size:24px;line-height:32px;color:#1A1A1A;padding-bottom:14px">Dues</div>
+    <div style="display:flex;border-bottom:1px solid #F0F0F0">
+      <button type="button" onClick="{{ selectPending }}" style="{{ tabPendingStyle }}">Pending</button>
+      <button type="button" onClick="{{ selectResolved }}" style="{{ tabResolvedStyle }}">Resolved</button>
+    </div>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;padding:16px 16px 20px;display:flex;flex-direction:column;gap:12px">
+    <div style="{{ statCardStyle }}">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+        <span style="font-weight:700;font-size:24px;line-height:1.15;color:#1A1A1A;font-variant-numeric:tabular-nums">{{ statAmount }}</span><span style="font-weight:500;font-size:12px;line-height:1;color:#666666">{{ statCount }}</span>
+        
+      </div>
+      
+      <sc-if value="{{ showCoveredLine }}" hint-placeholder-val="{{ true }}">
+        <span style="font-weight:400;font-size:13px;line-height:18px;color:#666666;text-wrap:pretty">{{ statNote }}</span><div style="display:flex;align-items:baseline;gap:6px;margin-top:4px;padding-top:10px;box-shadow:inset 0 1px 0 rgba(0,0,0,0.06)">
+          <span style="font-weight:600;font-size:13px;line-height:18px;color:#1E7B37;font-variant-numeric:tabular-nums;flex-shrink:0">+ {{ coveredAmount }}</span>
+          <span style="font-weight:400;font-size:13px;line-height:18px;color:#666666;text-wrap:pretty">already covered — nothing owed to you</span>
+        </div>
+      </sc-if>
+    </div>
+
+    <span style="font-weight:600;font-size:10px;line-height:1;letter-spacing:1px;color:#888888;padding:8px 0 0">{{ sectionLabel }}</span>
+
+    <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;overflow:hidden">
+      <sc-for list="{{ rows }}" as="row" hint-placeholder-count="3">
+        <div role="button" onClick="{{ row.open }}" style="{{ row.wrapStyle }}" style-hover="background:rgba(0,0,0,0.04)" style-active="background:#F5F5F5">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div style="width:36px;height:36px;border-radius:999px;background:{{ row.bubbleBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <span style="font-weight:700;font-size:13px;line-height:1;color:{{ row.iconColor }}">{{ row.initials }}</span>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;align-items:baseline;gap:8px">
+                <span style="flex:1;min-width:0;font-weight:600;font-size:15px;line-height:20px;color:#1A1A1A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ row.name }}</span>
+                <span style="font-weight:700;font-size:15px;line-height:20px;color:#1A1A1A;font-variant-numeric:tabular-nums;flex-shrink:0">{{ row.amount }}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;min-width:0">
+                <i data-lucide="map-pin" style="width:13px;height:13px;color:#AAAAAA;flex-shrink:0"></i>
+                <span style="font-weight:400;font-size:13px;line-height:17px;color:#666666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ row.drop }}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;min-width:0;padding-top:1px">
+                <span style="{{ row.badgeStyle }}">{{ row.badge }}</span>
+                <span style="font-weight:400;font-size:12px;line-height:16px;color:#888888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ row.caption }}</span>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" style="width:17px;height:17px;color:#AAAAAA;flex-shrink:0"></i>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ showFooterNote }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:8px;align-items:flex-start;padding:4px 2px 0">
+        <i data-lucide="info" style="width:15px;height:15px;color:#888888;flex-shrink:0;margin-top:2px"></i>
+        <span style="font-weight:400;font-size:12px;line-height:17px;color:#888888;text-wrap:pretty">Dues are settled from future ride collections. Your weekly payout goes out on schedule.</span>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="flex-shrink:0;background:#FFFFFF;box-shadow:inset 0 1px 0 #EBEBEB;display:flex;padding:8px 0 6px">
+    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+      <a href="{{ item.href }}" style="flex:1;text-decoration:none;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;position:relative">
+        <i data-lucide="{{ item.icon }}" style="width:21px;height:21px;color:{{ item.color }}"></i>
+        <span style="font-size:10px;line-height:1;font-weight:{{ item.weight }};color:{{ item.color }}">{{ item.label }}</span>
+        <sc-if value="{{ item.showDot }}" hint-placeholder-val="{{ false }}">
+          <span style="position:absolute;top:2px;right:22px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#EA4335;color:#FFFFFF;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ pendingCount }}</span>
+        </sc-if>
+      </a>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+  <div style="flex-shrink:0;background:#FFFFFF;box-shadow:inset 0 -1px 0 #F0F0F0;display:flex;align-items:center;gap:4px;padding:4px 16px 12px">
+    <button type="button" onClick="{{ goBack }}" aria-label="Back" style="width:44px;height:44px;margin-left:-13px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      <i data-lucide="chevron-left" style="width:24px;height:24px;color:#1A1A1A"></i>
+    </button>
+    <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+      <span style="font-weight:700;font-size:18px;line-height:22px;color:#1A1A1A">Trip details</span>
+      <span style="font-weight:400;font-size:12px;line-height:14px;color:#888888">ID: {{ d.id }}</span>
+    </div>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;padding:16px 16px 24px;display:flex;flex-direction:column;gap:12px">
+
+    <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;padding:16px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <span style="{{ d.badgeStyle }}">{{ d.badge }}</span>
+        <span style="font-weight:800;font-size:20px;line-height:1;color:#1A1A1A;font-variant-numeric:tabular-nums">{{ d.amount }}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:999px;background:{{ d.bubbleBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <span style="font-weight:700;font-size:13px;line-height:1;color:{{ d.iconColor }}">{{ d.initials }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+          <span style="font-weight:600;font-size:15px;line-height:18px;color:#1A1A1A">{{ d.name }}</span>
+          <span style="font-weight:400;font-size:12px;line-height:14px;color:#888888">{{ d.rideMeta }}</span>
+        </div>
+      </div>
+      <div style="height:1px;background:#F0F0F0;margin-left:0"></div>
+      <div style="display:flex;gap:12px;align-items:stretch">
+        <div style="width:16px;display:flex;flex-direction:column;align-items:center;padding:5px 0 6px">
+          <span style="width:8px;height:8px;border-radius:50%;background:#34A853;flex-shrink:0"></span>
+          <span style="flex:1;border-left:1.5px dashed #D1D1D1;margin:3px 0"></span>
+          <span style="width:8px;height:8px;background:#EA4335;flex-shrink:0"></span>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-weight:600;font-size:11px;line-height:1;letter-spacing:0.5px;color:#888888">PICKUP</span>
+            <span style="font-weight:700;font-size:13px;line-height:17px;color:#1A1A1A">{{ d.pickup }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-weight:600;font-size:11px;line-height:1;letter-spacing:0.5px;color:#888888">DROP</span>
+            <span style="font-weight:700;font-size:13px;line-height:17px;color:#1A1A1A">{{ d.dropFull }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="{{ d.explainStyle }}">
+      <span style="font-weight:700;font-size:14px;line-height:18px;color:#1A1A1A">{{ d.explainTitle }}</span>
+      <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-wrap:pretty">{{ d.explainBody }}</span>
+    </div>
+
+    
+
+    <sc-if value="{{ d.showRemind }}" hint-placeholder-val="{{ true }}">
+      <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;padding:16px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+          <span style="font-weight:700;font-size:14px;line-height:18px;color:#1A1A1A">Remind the rider</span>
+          <span style="font-weight:500;font-size:12px;line-height:16px;color:#888888;font-variant-numeric:tabular-nums">{{ remindCounter }}</span>
+        </div>
+        <span style="font-weight:400;font-size:12px;line-height:17px;color:#888888;text-wrap:pretty">{{ remindNote }}</span>
+        <button type="button" onClick="{{ sendReminder }}" style="{{ remindButtonStyle }}" style-active="opacity:0.9">{{ remindButtonLabel }}</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ d.showThanks }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;padding:16px;display:flex;flex-direction:column;gap:12px">
+        <span style="font-weight:700;font-size:14px;line-height:18px;color:#1A1A1A">Rate &amp; review</span>
+        <span style="font-weight:400;font-size:12px;line-height:17px;color:#888888;text-wrap:pretty">Optional. Rate this rider on how the payment was settled.</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;gap:4px">
+            <sc-for list="{{ stars }}" as="star" hint-placeholder-count="5">
+              <button type="button" onClick="{{ star.pick }}" aria-label="{{ star.label }}" style="width:34px;height:34px;border:0;background:transparent;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;color:{{ star.color }};transition:color 180ms ease">★</button>
+            </sc-for>
+          </div>
+          <span style="font-weight:500;font-size:12px;line-height:16px;color:#666666">{{ ratingLabel }}</span>
+        </div>
+        <sc-if value="{{ showReviewTags }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ reviewTags }}" as="tag" hint-placeholder-count="3">
+              <button type="button" onClick="{{ tag.toggle }}" style="{{ tag.style }}">{{ tag.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <button type="button" onClick="{{ sendThanks }}" style="{{ thanksButtonStyle }}" style-active="opacity:0.9">{{ thanksButtonLabel }}</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ d.showFlag }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;padding:16px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <i data-lucide="flag" style="width:16px;height:16px;color:{{ d.flagIconColor }};flex-shrink:0;margin-top:2px"></i>
+          <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+            <span style="font-weight:700;font-size:14px;line-height:18px;color:#1A1A1A">{{ d.flagTitle }}</span>
+            <span style="font-weight:400;font-size:12px;line-height:17px;color:#888888;text-wrap:pretty">{{ d.flagNote }}</span>
+          </div>
+        </div>
+        <sc-if value="{{ d.flagUnlocked }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ toggleFlag }}" style="{{ flagButtonStyle }}" style-active="background:#F5F5F5">{{ flagButtonLabel }}</button>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;gap:8px;align-items:flex-start;padding:2px 2px 0">
+      <i data-lucide="shield-check" style="width:15px;height:15px;color:#888888;flex-shrink:0;margin-top:2px"></i>
+      <span style="font-weight:400;font-size:12px;line-height:17px;color:#888888;text-wrap:pretty">Your payout is not affected by this due, whichever way it is settled.</span>
+    </div>
+  </div>
+  <div style="height:0"></div>
+</div>
+</sc-if>
+
+<div style="height:22px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:134px;height:5px;border-radius:999px;background:#1A1A1A"></div></div>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:16px;right:16px;bottom:44px;background:#1A1A1A;border-radius:8px;padding:12px 14px;animation:duesToast 2.6s ease forwards">
+    <span style="font-weight:500;font-size:13px;line-height:18px;color:#FFFFFF">{{ toast }}</span>
+  </div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:908},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;compact&quot;,&quot;comfortable&quot;],&quot;default&quot;:&quot;compact&quot;,&quot;tsType&quot;:&quot;\&quot;compact\&quot; | \&quot;comfortable\&quot;&quot;},&quot;reassurance&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Pending with the rider. Your payout isn't affected.&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showFooterNote&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;reminderLimit&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3,&quot;min&quot;:1,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;}}">
+const TRIPS = [
+  {id:"RD1748392045", name:"Ramesh Kumar", amount:"₹120", state:"requested", tab:"pending",
+   drop:"HSR Layout, Sector 2", pickup:"Koramangala 5th Block, 560095", dropFull:"HSR Layout Sector 2, 560102",
+   caption:"10 min ago", rideMeta:"Bike · 5.2 km · Today, 6:12 PM", hours:0.2},
+  {id:"RD1748391884", name:"Anjali Shetty", amount:"₹220", state:"covered", tab:"pending",
+   drop:"MG Road Metro", pickup:"Indiranagar 12th Main, 560038", dropFull:"MG Road Metro Station, 560001",
+   caption:"Yesterday, 8:30 PM", rideMeta:"Auto · 7.8 km · Yesterday, 8:30 PM", hours:21},
+  {id:"RD1748390977", name:"Kavya Iyer", amount:"₹95", state:"requested", tab:"pending",
+   drop:"Jayanagar 4th Block", pickup:"BTM Layout 2nd Stage, 560076", dropFull:"Jayanagar 4th Block, 560011",
+   caption:"4 days ago", rideMeta:"Bike · 4.1 km · 27 Aug, 9:20 PM", hours:98},
+  {id:"RD1748390211", name:"Vikram Rao", amount:"₹95", state:"recovered", tab:"resolved",
+   drop:"Silk Board Junction", pickup:"BTM Layout 1st Stage, 560029", dropFull:"Silk Board Junction, 560068",
+   caption:"Recovered · 2 days ago", rideMeta:"Bike · 3.4 km · 29 Aug, 7:05 PM", hours:52},
+  {id:"RD1748388760", name:"Priya Menon", amount:"₹180", state:"recovered", tab:"resolved",
+   drop:"Koramangala 8th Block", pickup:"Jayanagar 4th Block, 560011", dropFull:"Koramangala 8th Block, 560095",
+   caption:"Recovered · 3 days ago", rideMeta:"Auto · 6.6 km · 28 Aug, 1:40 PM", hours:76},
+  {id:"RD1748386402", name:"Suresh Babu", amount:"₹60", state:"recovered", tab:"resolved",
+   drop:"Indiranagar 100ft Road", pickup:"MG Road, 560001", dropFull:"Indiranagar 100ft Road, 560038",
+   caption:"Recovered · 5 days ago", rideMeta:"Bike · 2.8 km · 26 Aug, 10:15 AM", hours:124}
+];
+const BADGES = {
+  covered:   {label:"Covered", bg:"#E8F5E9", fg:"#1E7B37"},
+  requested: {label:"Alternate payment", bg:"#FFF8E1", fg:"#8A6400"},
+  recovered: {label:"Recovered", bg:"#F5F5F5", fg:"#666666"}
+};
+const BUBBLES = {
+  covered:   {bg:"#E8F5E9", fg:"#34A853"},
+  requested: {bg:"#FFF8E1", fg:"#B98A00"},
+  recovered: {bg:"#F5F5F5", fg:"#888888"}
+};
+const EXPLAIN = {
+  covered: {
+    title: "What's happening",
+    body: "This payment didn't go through because of a network issue on the rider's end. The amount is small and this rider has a strong payment history, so Rapido is covering it while the payment is retried.",
+    bg: "#E8F5E9"
+  },
+  requested: {
+    title: "This one needs a different payment method",
+    body: "The rider's payment failed twice, and this amount is above what Rapido settles on its own. They have been asked to pay by UPI or cash instead, and the request is open in their app.",
+    bg: "#FFF8E1"
+  },
+  recovered: {
+    title: "What happened",
+    body: "The rider cleared this due from their app. Nothing is outstanding on this trip.",
+    bg: "#F5F5F5"
+  }
+};
+const STEPS = {
+  covered: [
+    {title:"Payment retried", detail:"Two attempts made. Both failed on the rider's network.", done:true},
+    {title:"Rapido covering the fare", detail:"₹220 is already counted in your earnings.", current:true},
+    {title:"Retrying for 72 hours", detail:"If it clears, the due closes on its own. Nothing for you to do."}
+  ],
+  requested: [
+    {title:"Auto-retry window closed", detail:"Three attempts over 48 hours, all declined.", done:true},
+    {title:"Alternate payment requested", detail:"The rider can pay by UPI or cash from their app.", current:true},
+    {title:"If it stays unpaid", detail:"Rapido settles the amount and follows up with the rider directly."}
+  ],
+  recovered: [
+    {title:"Rider paid by UPI", detail:"Full amount received.", done:true},
+    {title:"Added to your collections", detail:"Included in this week's payout.", done:true},
+    {title:"Closed", detail:"No further action needed.", done:true}
+  ]
+};
+
+const RATING_WORDS = {1:"Poor", 2:"Fair", 3:"Okay", 4:"Good", 5:"Excellent"};
+const REVIEW_TAGS = ["Paid quickly", "Kept in touch", "Polite", "Hard to reach"];
+
+class Component extends DCLogic {
+  state = {tab:"pending", openId:null, reminders:{}, thanked:{}, flagged:{}, ratings:{}, tags:{}, toast:null};
+
+  icons() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidMount() { this.icons(); this._t = setInterval(() => this.icons(), 400); }
+  componentDidUpdate() { this.icons(); }
+  componentWillUnmount() { clearInterval(this._t); clearTimeout(this._toast); }
+
+  say(msg) {
+    clearTimeout(this._toast);
+    this.setState({toast: msg});
+    this._toast = setTimeout(() => this.setState({toast: null}), 2600);
+  }
+
+  tab(active) {
+    return "flex:1;border:0;background:transparent;cursor:pointer;padding:0 0 11px;font-family:inherit;font-size:14px;line-height:18px;text-align:center;transition:color 180ms ease;"
+      + (active ? "font-weight:700;color:#1A1A1A;box-shadow:inset 0 -2px 0 #FDC830;" : "font-weight:500;color:#888888;");
+  }
+
+  badge(state) {
+    const b = BADGES[state];
+    return "border-radius:999px;padding:4px 10px;font-size:11px;font-weight:700;line-height:14px;background:" + b.bg + ";color:" + b.fg + ";white-space:nowrap";
+  }
+
+  btn(kind) {
+    const base = "width:100%;min-height:44px;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;line-height:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 180ms ease;padding:0 14px;";
+    if (kind === "primary") return base + "border:0;background:#FDC830;color:#1A1A1A;";
+    if (kind === "secondary") return base + "border:1px solid #1A1A1A;background:transparent;color:#1A1A1A;";
+    return base + "border:0;background:#E8E8E8;color:#AAAAAA;cursor:default;";
+  }
+
+  detailVals(t) {
+    const limit = this.props.reminderLimit ?? 3;
+    const sent = this.state.reminders[t.id] ?? 0;
+    const thanked = !!this.state.thanked[t.id];
+    const flagged = !!this.state.flagged[t.id];
+    const rating = this.state.ratings[t.id] ?? 0;
+    const unlocked = t.hours >= 72;
+    const open = t.state !== "recovered";
+    const ex = EXPLAIN[t.state];
+
+    const steps = STEPS[t.state];
+    const d = {
+      ...t,
+      initials: t.name.split(" ").map(w => w[0]).join("").slice(0, 2),
+      badge: BADGES[t.state].label,
+      badgeStyle: this.badge(t.state),
+      bubbleBg: BUBBLES[t.state].bg,
+      iconColor: BUBBLES[t.state].fg,
+      explainTitle: ex.title,
+      explainBody: ex.body,
+      explainStyle: "border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;background:" + ex.bg,
+      steps: steps.map((s, i) => ({
+        ...s,
+        dotBg: s.done ? "#34A853" : (s.current ? "#FDC830" : "#FFFFFF"),
+        dotRing: s.done || s.current ? "none" : "inset 0 0 0 1.5px #D1D1D1",
+        titleColor: s.done || s.current ? "#1A1A1A" : "#666666",
+        lineStyle: i < steps.length - 1
+          ? "flex:1;border-left:1.5px " + (s.done ? "solid #C8E6CD" : "dashed #D1D1D1") + ";margin:4px 0 0;"
+          : "display:none;",
+        bodyStyle: "flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;padding:0 0 " + (i < steps.length - 1 ? "18px" : "0")
+      })),
+      showRemind: open && t.state !== "covered",
+      showThanks: t.state === "recovered",
+      showFlag: open && t.state !== "covered",
+      flagUnlocked: unlocked,
+      flagIconColor: flagged ? "#EA4335" : (unlocked ? "#1A1A1A" : "#AAAAAA"),
+      flagTitle: flagged ? "Flagged for review" : (unlocked ? "Flag this rider" : "Flag this rider"),
+      flagNote: flagged
+        ? "Rapido support will look into this due and get back to you."
+        : (unlocked
+          ? "This due has been open for more than 72 hours. You can send it to Rapido support for review."
+          : "Available once a due stays open for 72 hours. " + Math.max(1, Math.ceil(72 - t.hours)) + "h to go.")
+    };
+
+    return {
+      d,
+      remindCounter: sent + " / " + limit + " today",
+      remindNote: sent >= limit
+        ? "You have sent the maximum of " + limit + " reminders today. The limit resets at midnight."
+        : "Sends a payment reminder to the rider's app. Up to " + limit + " a day.",
+      remindButtonLabel: sent >= limit ? "Daily limit reached" : (sent > 0 ? "Send another reminder" : "Send reminder"),
+      remindButtonStyle: this.btn(sent >= limit ? "disabled" : "primary"),
+      sendReminder: () => {
+        if (sent >= limit) return;
+        this.setState(s => ({reminders: {...s.reminders, [t.id]: sent + 1}}));
+        this.say("Reminder sent to " + t.name.split(" ")[0] + ".");
+      },
+      stars: [1,2,3,4,5].map(n => ({
+        label: n + " star",
+        color: n <= rating ? "#FDC830" : "#E8E8E8",
+        pick: () => this.setState(s => ({ratings: {...s.ratings, [t.id]: n}}))
+      })),
+      ratingLabel: rating ? RATING_WORDS[rating] : "Not rated",
+      showReviewTags: rating > 0 && !thanked,
+      reviewTags: REVIEW_TAGS.map(label => {
+        const on = (this.state.tags[t.id] || []).indexOf(label) > -1;
+        return {
+          label,
+          style: "border-radius:999px;padding:7px 12px;font-family:inherit;font-size:12px;font-weight:600;line-height:14px;cursor:pointer;transition:background 180ms ease;"
+            + (on ? "border:1px solid #1A1A1A;background:#FFF3CC;color:#1A1A1A;" : "border:1px solid #E8E8E8;background:#FFFFFF;color:#666666;"),
+          toggle: () => this.setState(s => {
+            const cur = s.tags[t.id] || [];
+            return {tags: {...s.tags, [t.id]: on ? cur.filter(x => x !== label) : cur.concat(label)}};
+          })
+        };
+      }),
+      thanksButtonLabel: thanked ? (rating ? "Rating and thank you sent" : "Thank you sent") : (rating ? "Send rating and thank you" : "Send a thank you"),
+      thanksButtonStyle: this.btn(thanked ? "disabled" : "secondary"),
+      sendThanks: () => {
+        if (thanked) return;
+        this.setState(s => ({thanked: {...s.thanked, [t.id]: true}}));
+        this.say(rating
+          ? "Rated " + rating + " ★ · thank you sent to " + t.name.split(" ")[0] + "."
+          : "Thank you sent to " + t.name.split(" ")[0] + ".");
+      },
+      flagButtonLabel: flagged ? "Remove flag" : "Flag this",
+      flagButtonStyle: this.btn("secondary"),
+      toggleFlag: () => {
+        this.setState(s => ({flagged: {...s.flagged, [t.id]: !flagged}}));
+        this.say(flagged ? "Flag removed." : "Sent to Rapido support for review.");
+      }
+    };
+  }
+
+  renderVals() {
+    const openTrip = TRIPS.find(t => t.id === this.state.openId);
+    const pending = this.state.tab === "pending";
+    const dense = (this.props.density ?? "compact") === "compact";
+    const pad = dense ? 13 : 16;
+    const src = TRIPS.filter(t => t.tab === this.state.tab);
+
+    const rows = src.map((r, i) => ({
+      ...r,
+      initials: r.name.split(" ").map(w => w[0]).join("").slice(0, 2),
+      badge: BADGES[r.state].label,
+      badgeStyle: this.badge(r.state),
+      bubbleBg: BUBBLES[r.state].bg,
+      iconColor: BUBBLES[r.state].fg,
+      wrapStyle: "padding:" + pad + "px 16px;cursor:pointer;transition:background 180ms ease;"
+        + (i < src.length - 1 ? "box-shadow:inset 0 -1px 0 #F0F0F0;" : ""),
+      open: () => this.setState({openId: r.id})
+    }));
+
+    const nav = [
+      {icon:"home", label:"Home", href:"0. Captain Home.dc.html"},
+      {icon:"indian-rupee", label:"Earnings", href:"0. Captain Home.dc.html"},
+      {icon:"clipboard-list", label:"Bookings", href:"0. Captain Home.dc.html"},
+      {icon:"receipt-text", label:"Dues", href:"2. Captain Dues flow.dc.html", active:true, showDot:true},
+      {icon:"user-round", label:"Account", href:"0. Captain Home.dc.html"}
+    ].map(n => ({
+      ...n,
+      color: n.active ? "#E5A800" : "#888888",
+      weight: n.active ? 700 : 400,
+      showDot: !!n.showDot
+    }));
+
+    const pendingCount = TRIPS.filter(t => t.tab === "pending").length;
+    const sum = (list) => "₹" + list.reduce((n, t) => n + Number(t.amount.replace(/[^\d]/g, "")), 0);
+    const openTrips = TRIPS.filter(t => t.tab === "pending" && t.state === "requested");
+    const coveredTrips = TRIPS.filter(t => t.tab === "pending" && t.state === "covered");
+    const openAmount = sum(openTrips);
+    const coveredAmount = sum(coveredTrips);
+
+    return {
+      isList: !openTrip,
+      isDetail: !!openTrip,
+      goBack: () => this.setState({openId: null}),
+      toast: this.state.toast,
+      rows,
+      navItems: nav,
+      pendingCount: String(pendingCount),
+      selectPending: () => this.setState({tab: "pending"}),
+      selectResolved: () => this.setState({tab: "resolved"}),
+      tabPendingStyle: this.tab(pending),
+      tabResolvedStyle: this.tab(!pending),
+      sectionLabel: pending ? "UNRESOLVED TRIPS" : "LAST 7 DAYS",
+      statAmount: pending ? openAmount : "₹335",
+      statCount: pending ? "Alternate payment · " + openTrips.length + " trips" : "3 trips",
+      statNote: pending
+        ? (this.props.reassurance ?? "Pending with the rider. Your payout isn't affected.")
+        : "Recovered from ride collections. Nothing outstanding.",
+      showCoveredLine: pending && coveredTrips.length > 0,
+      coveredAmount,
+      statCardStyle: "border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;background:" + (pending ? "#FFF8E1" : "#F5F5F5"),
+      showFooterNote: pending && (this.props.showFooterNote ?? true),
+      ...(openTrip ? this.detailVals(openTrip) : {d: {}})
+    };
+  }
+}
+</script>
+</body>
+</html>

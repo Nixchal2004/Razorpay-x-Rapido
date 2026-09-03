@@ -1,0 +1,10 @@
+/* Rapido DS — webfonts.
+   The .fig references only Inter (Light 300 → Extra Bold 800). No binaries ship
+   inside the Figma file, so Inter is loaded from Google Fonts. Replace this
+   @import with local @font-face rules if you have licensed Inter files. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* The iOS device-chrome and messaging components carry their own Apple system
+   font stacks inline (SF Pro Text / SF Pro Display first, then -apple-system),
+   so they render in the real face on Apple platforms and fall back elsewhere.
+   No design-system token points at those families. */

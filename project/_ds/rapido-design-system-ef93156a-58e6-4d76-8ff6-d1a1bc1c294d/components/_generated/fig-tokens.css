@@ -1,0 +1,64 @@
+/* Generated from Figma Variables. First mode = :root default.
+   FLOAT tokens are unitless — multiply by 1px in calc() where a length is needed. */
+
+:root {
+  --accents-red: rgb(255,56,60); /* @kind color */
+  --accents-yellow: rgb(255,204,0); /* @kind color */
+  --background-elevated: rgb(255,255,255); /* @kind color */
+  --background-overlay: rgb(0,0,0); /* @kind color */
+  --background-primary: rgb(255,255,255); /* @kind color */
+  --background-secondary: rgb(245,245,245); /* @kind color */
+  --border-default: rgb(232,232,232); /* @kind color */
+  --border-strong: rgb(209,209,209); /* @kind color */
+  --border-subtle: rgb(245,245,245); /* @kind color */
+  --neutral-gray-100: rgb(245,245,245); /* @kind color */
+  --neutral-gray-200: rgb(232,232,232); /* @kind color */
+  --neutral-gray-300: rgb(209,209,209); /* @kind color */
+  --neutral-gray-400: rgb(170,170,170); /* @kind color */
+  --neutral-gray-500: rgb(136,136,136); /* @kind color */
+  --neutral-gray-50: rgb(250,250,250); /* @kind color */
+  --neutral-gray-600: rgb(102,102,102); /* @kind color */
+  --neutral-gray-700: rgb(74,74,74); /* @kind color */
+  --neutral-gray-800: rgb(51,51,51); /* @kind color */
+  --neutral-gray-900: rgb(33,33,33); /* @kind color */
+  --primary-black: rgb(26,26,26); /* @kind color */
+  --primary-white: rgb(255,255,255); /* @kind color */
+  --primary-yellow-dark: rgb(229,168,0); /* @kind color */
+  --primary-yellow-light: rgb(255,243,204); /* @kind color */
+  --primary-yellow: rgb(253,200,48); /* @kind color */
+  --radius-2xl: 20;
+  --radius-full: 100;
+  --radius-lg: 12;
+  --radius-md: 8;
+  --radius-none: 0;
+  --radius-sm: 4;
+  --radius-xl: 16;
+  --semantic-error-light: rgb(253,236,234); /* @kind color */
+  --semantic-error: rgb(234,67,53); /* @kind color */
+  --semantic-info-light: rgb(227,242,253); /* @kind color */
+  --semantic-info: rgb(66,133,244); /* @kind color */
+  --semantic-success-light: rgb(232,245,233); /* @kind color */
+  --semantic-success: rgb(52,168,83); /* @kind color */
+  --semantic-warning-light: rgb(255,248,225); /* @kind color */
+  --semantic-warning: rgb(251,188,4); /* @kind color */
+  --spacing-12: 12;
+  --spacing-16: 16;
+  --spacing-20: 20;
+  --spacing-24: 24;
+  --spacing-2: 2;
+  --spacing-32: 32;
+  --spacing-40: 40;
+  --spacing-48: 48;
+  --spacing-4: 4;
+  --spacing-8: 8;
+  --text-inverse: rgb(255,255,255); /* @kind color */
+  --text-link: rgb(66,133,244); /* @kind color */
+  --text-primary: rgb(26,26,26); /* @kind color */
+  --text-secondary: rgb(102,102,102); /* @kind color */
+  --text-tertiary: rgb(136,136,136); /* @kind color */
+}
+
+:root[data-theme="dark"], .dark {
+  --accents-red: rgb(255,66,69); /* @kind color */
+  --accents-yellow: rgb(255,214,0); /* @kind color */
+}

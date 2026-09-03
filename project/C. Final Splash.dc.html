@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/radius.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/base.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/styles.css">
+<script src="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/_ds_bundle.js"></script>
+<style>body{margin:0;background:#EDEBE7;display:flex;justify-content:center;align-items:flex-start;padding:32px 0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}*{box-sizing:border-box}a{color:#1A1A1A}a:hover{color:#1A1A1A}::-webkit-scrollbar{width:0}@keyframes splashMark{from{opacity:0;transform:scale(0.94)}to{opacity:1;transform:scale(1)}}@keyframes splashDot{0%,80%,100%{transform:translateY(0);opacity:0.45}40%{transform:translateY(-7px);opacity:1}}</style>
+</helmet>
+<div style="width:390px;height:844px;background:#E0A50B;display:flex;flex-direction:column;overflow:hidden;position:relative;border-radius:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+
+<div style="flex-shrink:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px">
+  <span style="font-weight:600;font-size:15px;line-height:20px;color:#1A1A1A;font-variant-numeric:tabular-nums">9:41</span>
+  <div style="display:flex;align-items:center;gap:6px">
+    <span style="{{ signalGlyph }}"></span>
+    <span style="{{ wifiGlyph }}"></span>
+    <span style="width:24px;height:12px;border-radius:3px;box-shadow:inset 0 0 0 1.2px rgba(26,26,26,0.55);padding:1.6px;display:flex">
+      <span style="flex:1;border-radius:1.6px;background:#34A853"></span>
+    </span>
+  </div>
+</div>
+
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding-bottom:70px">
+  <div style="background:#FBCB2B;border-radius:999px;padding:26px 44px;display:flex;align-items:center;justify-content:center;animation:splashMark 420ms cubic-bezier(0.2,0.8,0.2,1) both">
+    <span style="font-weight:800;font-size:44px;line-height:1;letter-spacing:-1.6px;color:#1A1A1A">rapido</span>
+  </div>
+  <div role="status" aria-label="Loading" style="display:flex;align-items:center;gap:7px">
+    <span style="width:8px;height:8px;border-radius:999px;background:#1A1A1A;animation:splashDot 1s ease-in-out 0ms infinite"></span>
+    <span style="width:8px;height:8px;border-radius:999px;background:#1A1A1A;animation:splashDot 1s ease-in-out 140ms infinite"></span>
+    <span style="width:8px;height:8px;border-radius:999px;background:#1A1A1A;animation:splashDot 1s ease-in-out 280ms infinite"></span>
+  </div>
+</div>
+
+<a href="0. Captain Home.dc.html" aria-label="Continue to home" style="position:absolute;inset:0;text-decoration:none"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:908},&quot;autoAdvance&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;holdMs&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1800,&quot;min&quot;:600,&quot;max&quot;:4000,&quot;step&quot;:200,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this.props.autoAdvance ?? true) {
+      this._t = setTimeout(() => { window.location.href = "0. Captain Home.dc.html"; }, (this.props.holdMs ?? 1800));
+    }
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  renderVals() {
+    const mask = (n) => "width:17px;height:12px;background:#1A1A1A;-webkit-mask:url('https://unpkg.com/lucide-static@0.469.0/icons/" + n + ".svg') center/contain no-repeat;mask:url('https://unpkg.com/lucide-static@0.469.0/icons/" + n + ".svg') center/contain no-repeat";
+    return {signalGlyph: mask("signal-high"), wifiGlyph: mask("wifi")};
+  }
+}
+</script>
+</body>
+</html>

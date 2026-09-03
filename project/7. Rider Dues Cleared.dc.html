@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/radius.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-tokens.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-assets.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/base.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/styles.css">
+<script src="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/_ds_bundle.js"></script>
+<style>body{margin:0;background:#EDEBE7;display:flex;justify-content:center;align-items:flex-start;padding:32px 0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}*{box-sizing:border-box}a{color:#4285F4}a:hover{color:#1A1A1A}::-webkit-scrollbar{width:0}@keyframes dcRing{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}@keyframes dcUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}</style>
+</helmet>
+<div style="width:390px;height:844px;background:#E8F5E9;display:flex;flex-direction:column;overflow:hidden;position:relative;border-radius:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+
+<div style="flex-shrink:0"><x-import component-from-global-scope="RapidoDesignSystem_ef9315.StatusBar" hint-size="390px,54px"></x-import></div>
+
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 28px;gap:18px;text-align:center">
+  <div style="width:88px;height:88px;border-radius:999px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;animation:dcRing 260ms ease">
+    <div style="width:64px;height:64px;border-radius:999px;background:#34A853;display:flex;align-items:center;justify-content:center">
+      <span style="{{ checkGlyph }}"></span>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;animation:dcUp 280ms ease 60ms both">
+    <span style="font-weight:700;font-size:24px;line-height:30px;color:#1A1A1A">You're all cleared</span>
+    <span style="font-weight:400;font-size:15px;line-height:22px;color:#3E4A40;text-wrap:pretty">{{ supporting }}</span>
+  </div>
+
+  <div style="display:flex;align-items:baseline;gap:8px;background:#FFFFFF;border-radius:999px;padding:9px 16px;animation:dcUp 280ms ease 120ms both">
+    <span style="font-weight:500;font-size:13px;line-height:17px;color:#666666">{{ amountLabel }}</span>
+    <span style="font-weight:800;font-size:16px;line-height:20px;color:#1A1A1A;font-variant-numeric:tabular-nums">{{ amount }}</span>
+  </div>
+</div>
+
+<div style="flex-shrink:0;padding:12px 20px 16px">
+  <a href="3. Rider Home Dues Popup.dc.html" style="width:100%;min-height:50px;border-radius:12px;background:#FDC830;color:#1A1A1A;text-decoration:none;font-size:15px;font-weight:700;line-height:20px;display:flex;align-items:center;justify-content:center;transition:background 180ms ease" style-hover="background:#F5C01E" style-active="background:#E5A800">Book ride</a>
+</div>
+<div style="height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:134px;height:5px;border-radius:999px;background:#1A1A1A"></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:908},&quot;hardBlock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;},&quot;amount&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;₹325&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;State&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const hardBlock = this.props.hardBlock ?? true;
+    const q = new URLSearchParams(window.location.search).get("amount");
+    const amount = q ? "₹" + q.replace(/[^0-9]/g, "") : (this.props.amount ?? "₹325");
+    return {
+      checkGlyph: "width:32px;height:32px;flex-shrink:0;background:#FFFFFF;-webkit-mask:url('https://unpkg.com/lucide-static@0.469.0/icons/check.svg') center/contain no-repeat;mask:url('https://unpkg.com/lucide-static@0.469.0/icons/check.svg') center/contain no-repeat",
+      supporting: hardBlock
+        ? "Your flag has been removed. You can book rides again."
+        : "Payment settled. Nothing is pending on your account.",
+      amountLabel: hardBlock ? "Flag removed · Paid" : "Paid",
+      amount
+    };
+  }
+}
+</script>
+</body>
+</html>

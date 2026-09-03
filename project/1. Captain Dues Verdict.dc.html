@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/radius.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-tokens.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-assets.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/base.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/styles.css">
+<script src="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>body{margin:0;background:#EDEBE7;display:flex;justify-content:center;align-items:flex-start;padding:32px 0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}*{box-sizing:border-box}a{color:#4285F4}a:hover{color:#1A1A1A}::-webkit-scrollbar{width:0}@keyframes vSheet{from{transform:translateY(24px)}to{transform:translateY(0)}}@keyframes vStep{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}@keyframes vToast{0%{opacity:0}10%{opacity:1}82%{opacity:1}100%{opacity:0}}</style>
+</helmet>
+<div style="width:390px;height:844px;background:#FAFAFA;display:flex;flex-direction:column;overflow:hidden;position:relative;border-radius:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+
+<div style="flex-shrink:0;background:#FFFFFF"><x-import component-from-global-scope="RapidoDesignSystem_ef9315.StatusBar" hint-size="390px,54px"></x-import></div>
+
+<div style="flex-shrink:0;background:#FFFFFF;box-shadow:inset 0 -1px 0 #F0F0F0;display:flex;align-items:center;justify-content:space-between;padding:2px 16px 12px">
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <span style="font-weight:700;font-size:18px;line-height:22px;color:#1A1A1A">Trip completed</span>
+    <span style="font-weight:400;font-size:12px;line-height:14px;color:#888888">ID: RD1748392045</span>
+  </div>
+  <span style="border-radius:999px;padding:5px 11px;font-size:11px;font-weight:700;line-height:14px;background:#F5F5F5;color:#666666">Payment pending</span>
+</div>
+
+<div style="flex:1;min-height:0;position:relative;display:flex;flex-direction:column">
+  <div style="flex:1;min-height:0;background:#DDE3E0 url('assets/map-bangalore.png') center/cover no-repeat"></div>
+  <div style="flex-shrink:0;background:#FAFAFA;padding:12px 16px 16px;display:flex;flex-direction:column;gap:12px">
+    <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;padding:16px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0">
+          <div style="width:36px;height:36px;border-radius:999px;background:#FFF3CC;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <span style="font-weight:700;font-size:13px;line-height:1;color:#B98A00">RK</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+            <span style="font-weight:600;font-size:15px;line-height:18px;color:#1A1A1A">Ramesh Kumar</span>
+            <span style="font-weight:400;font-size:12px;line-height:14px;color:#888888">Bike · 5.2 km · 14 min</span>
+          </div>
+        </div>
+        <span style="font-weight:800;font-size:20px;line-height:1;color:#1A1A1A;font-variant-numeric:tabular-nums">₹120</span>
+      </div>
+      <div style="height:1px;background:#F0F0F0"></div>
+      <div style="display:flex;gap:12px;align-items:stretch">
+        <div style="width:16px;display:flex;flex-direction:column;align-items:center;padding:5px 0 6px">
+          <span style="width:8px;height:8px;border-radius:50%;background:#34A853;flex-shrink:0"></span>
+          <span style="flex:1;border-left:1.5px dashed #D1D1D1;margin:3px 0"></span>
+          <span style="width:8px;height:8px;background:#EA4335;flex-shrink:0"></span>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-weight:600;font-size:11px;line-height:1;letter-spacing:0.5px;color:#888888">PICKUP</span>
+            <span style="font-weight:700;font-size:13px;line-height:17px;color:#1A1A1A">Koramangala 5th Block, 560095</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-weight:600;font-size:11px;line-height:1;letter-spacing:0.5px;color:#888888">DROP</span>
+            <span style="font-weight:700;font-size:13px;line-height:17px;color:#1A1A1A">HSR Layout Sector 2, 560102</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ sheetVisible }}" hint-placeholder-val="{{ true }}">
+  <div style="{{ scrimStyle }}">
+    <div style="width:100%;background:#FFFFFF;border-radius:16px 16px 0 0;box-shadow:0 -2px 16px rgba(0,0,0,0.051);padding:12px 16px 20px;display:flex;flex-direction:column;gap:16px;animation:vSheet 200ms ease">
+      <div style="width:38px;height:4px;border-radius:999px;background:#E8E8E8;align-self:center;flex-shrink:0"></div>
+
+      <sc-if value="{{ isReview }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:16px;animation:vStep 200ms ease">
+          <span style="font-weight:700;font-size:18px;line-height:24px;color:#1A1A1A;text-wrap:pretty">Payment didn't go through — here's what we know</span>
+
+          <div style="background:#E3F2FD;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+              <span style="font-weight:600;font-size:12px;line-height:16px;color:#1A5FB8">Floor limit ₹200</span>
+              <span style="font-weight:700;font-size:12px;line-height:16px;color:#1A1A1A;font-variant-numeric:tabular-nums">This trip · ₹120</span>
+            </div>
+            <div style="position:relative;height:24px">
+              <div style="position:absolute;left:0;right:0;top:9px;height:6px;border-radius:999px;background:#FFFFFF"></div>
+              <div style="position:absolute;left:0;top:9px;height:6px;width:60%;border-radius:999px;background:#4285F4"></div>
+              <div style="position:absolute;left:60%;top:3px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 3px #4285F4"></div>
+              <div style="position:absolute;right:0;top:2px;width:2px;height:20px;background:#9DBFF0"></div>
+            </div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between">
+              <span style="font-weight:400;font-size:11px;line-height:14px;color:#4A6C99">₹0</span>
+              <span style="font-weight:400;font-size:11px;line-height:14px;color:#4A6C99;text-wrap:pretty">Under the limit Rapido can cover</span>
+              <span style="font-weight:400;font-size:11px;line-height:14px;color:#4A6C99">₹200</span>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #F0F0F0;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:44px;height:44px;border-radius:999px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <span style="font-weight:700;font-size:15px;line-height:1;color:#666666">RK</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                <span style="font-weight:700;font-size:15px;line-height:18px;color:#1A1A1A">Ramesh</span>
+                <div style="display:flex;align-items:center;gap:5px">
+                  <span style="font-size:13px;line-height:1;color:#FDC830">★</span>
+                  <span style="font-weight:600;font-size:13px;line-height:1;color:#1A1A1A;font-variant-numeric:tabular-nums">4.8</span>
+                  <span style="font-weight:400;font-size:12px;line-height:1;color:#888888">rider rating</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border-radius:999px;padding:5px 11px;font-size:11px;font-weight:700;line-height:14px;background:#F5F5F5;color:#666666">12 rides together</span>
+              <span style="border-radius:999px;padding:5px 11px;font-size:11px;font-weight:700;line-height:14px;background:#E8F5E9;color:#1E7B37">Dues history: 4 settled</span>
+              <span style="border-radius:999px;padding:5px 11px;font-size:11px;font-weight:700;line-height:14px;background:#F5F5F5;color:#666666">0 escalated</span>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button type="button" onClick="{{ goOtp }}" style="{{ primaryBtn }}" style-active="background:#E5A800">Mark as due</button>
+            <button type="button" onClick="{{ goAltCode }}" style="{{ secondaryBtn }}" style-active="background:#F5F5F5">Request alternate payment</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOtp }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:14px;animation:vStep 200ms ease">
+          <span style="font-weight:700;font-size:18px;line-height:24px;color:#1A1A1A;text-wrap:pretty">Ask your rider for their emergency code</span>
+          <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-wrap:pretty">{{ codeIntro }}</span>
+
+          <div style="display:flex;gap:8px">
+            <sc-for list="{{ boxes }}" as="box" hint-placeholder-count="6">
+              <input type="text" inputMode="text" autoCapitalize="characters" autoComplete="off" spellCheck="{{ false }}" maxLength="1" aria-label="{{ box.aria }}" value="{{ box.value }}" onChange="{{ box.onChange }}" onKeyDown="{{ box.onKeyDown }}" ref="{{ box.ref }}" style="{{ box.style }}">
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ codeError }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <span style="{{ errGlyph }}"></span>
+              <span style="font-weight:500;font-size:12px;line-height:17px;color:#B0342A;text-wrap:pretty">That code doesn't match. Ask your rider to check their screen.</span>
+            </div>
+          </sc-if>
+
+          <span style="font-weight:400;font-size:11px;line-height:16px;color:#888888;text-wrap:pretty">Your rider can reveal this code under Emergency code in their trip details.</span>
+
+          <div style="display:flex;flex-direction:column;gap:6px;padding-top:2px">
+            <button type="button" onClick="{{ submitCode }}" disabled="{{ codeIncomplete }}" style="{{ confirmBtn }}" style-active="background:#E5A800">{{ confirmLabel }}</button>
+            <button type="button" onClick="{{ goReview }}" style="{{ linkBtn }}">Go back</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;animation:vStep 200ms ease">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:4px">
+            <div style="width:56px;height:56px;border-radius:999px;background:#E8F5E9;display:flex;align-items:center;justify-content:center">
+              <i data-lucide="check" style="width:28px;height:28px;color:#34A853"></i>
+            </div>
+            <span style="font-weight:700;font-size:24px;line-height:32px;color:#1A1A1A;text-align:center">Added to Dues</span>
+            <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-align:center;text-wrap:pretty;font-variant-numeric:tabular-nums">₹120 · Bike ride · Koramangala 5th Block → HSR Layout</span>
+            <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-align:center;text-wrap:pretty">You're covered — go ahead. Your payout isn't affected while this is pending.</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <a href="0. Captain Home.dc.html" onClick="{{ tapBuzz }}" style="{{ primaryLink }}" style-active="background:#E5A800">Find new rides</a>
+            <button type="button" onClick="{{ reportIssue }}" style="{{ linkBtn }}">Report an issue</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDeclined }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;animation:vStep 200ms ease">
+          <div style="background:#FFF8E1;border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:10px">
+            <div style="width:40px;height:40px;border-radius:999px;background:#FFFFFF;display:flex;align-items:center;justify-content:center">
+              <i data-lucide="wallet" style="width:21px;height:21px;color:#B98A00"></i>
+            </div>
+            <span style="font-weight:700;font-size:18px;line-height:24px;color:#1A1A1A">Ask for another payment method</span>
+            <span style="font-weight:400;font-size:13px;line-height:19px;color:#4A4A4A;text-wrap:pretty">Ramesh will be asked to pay by UPI or cash. The request stays open in their app and you can follow it in Dues.</span>
+            <span style="font-weight:500;font-size:12px;line-height:16px;color:#666666;font-variant-numeric:tabular-nums">₹120 · Koramangala → HSR Layout</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <sc-if value="{{ altSent }}" hint-placeholder-val="{{ false }}">
+              <a href="0. Captain Home.dc.html" onClick="{{ tapBuzz }}" style="{{ primaryLink }}" style-active="background:#E5A800">Find new rides</a>
+            </sc-if>
+            <sc-if value="{{ altPending }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ requestAlternate }}" style="{{ primaryBtn }}" style-active="background:#E5A800">Request alternate payment</button>
+            </sc-if>
+            <button type="button" onClick="{{ goReview }}" style="{{ linkBtn }}">Go back</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
+</div>
+
+<div style="height:22px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:134px;height:5px;border-radius:999px;background:#1A1A1A"></div></div>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:16px;right:16px;bottom:44px;background:#1A1A1A;border-radius:8px;padding:12px 14px;animation:vToast 2.6s ease forwards">
+    <span style="font-weight:500;font-size:13px;line-height:18px;color:#FFFFFF">{{ toast }}</span>
+  </div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:908},&quot;startStep&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;review&quot;,&quot;otp&quot;,&quot;done&quot;,&quot;declined&quot;],&quot;default&quot;:&quot;review&quot;,&quot;tsType&quot;:&quot;\&quot;review\&quot; | \&quot;otp\&quot; | \&quot;done\&quot; | \&quot;declined\&quot;&quot;},&quot;scrimStrength&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:32,&quot;min&quot;:0,&quot;max&quot;:60,&quot;step&quot;:4,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;compact&quot;,&quot;comfortable&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;\&quot;compact\&quot; | \&quot;comfortable\&quot;&quot;}}">
+class Component extends DCLogic {
+  static CODE = "ABC123";
+  static LEN = 6;
+  state = {step: "review", after: "due", closed: false, sent: false, toast: null, code: ["", "", "", "", "", ""], codeError: false};
+  _refs = [];
+
+  buzz(kind) {
+    const p = {tap: 8, key: 4, error: [18, 60, 18], success: [12, 40, 24]}[kind] || 8;
+    if (navigator.vibrate) navigator.vibrate(p);
+  }
+
+  setDigit(i, raw) {
+    const v = (raw || "").replace(/[^A-Za-z0-9]/g, "").slice(-1).toUpperCase();
+    const code = this.state.code.slice();
+    code[i] = v;
+    this.setState({code, codeError: false});
+    if (v) this.buzz("key");
+    if (v && i < Component.LEN - 1) { const n = this._refs[i + 1]; if (n) n.focus(); }
+  }
+
+  digitKey(i, e) {
+    if (e.key === "Backspace" && !this.state.code[i] && i > 0) {
+      e.preventDefault();
+      const code = this.state.code.slice();
+      code[i - 1] = "";
+      this.setState({code, codeError: false});
+      const p = this._refs[i - 1]; if (p) p.focus();
+    }
+  }
+
+  submit() {
+    if (this.state.code.join("").toUpperCase() === Component.CODE) {
+      const alt = this.state.after === "alt";
+      this._touched = true;
+      this.setState({step: alt ? "declined" : "done", codeError: false});
+      this.buzz("success");
+    } else {
+      this.buzz("error");
+      this.setState({code: ["", "", "", "", "", ""], codeError: true});
+      const f = this._refs[0]; if (f) f.focus();
+    }
+  }
+
+  icons() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidMount() { this.icons(); this._t = setInterval(() => this.icons(), 400); }
+  componentDidUpdate() { this.icons(); }
+  componentWillUnmount() { clearInterval(this._t); clearTimeout(this._toast); }
+
+  say(msg) {
+    clearTimeout(this._toast);
+    this.setState({toast: msg});
+    this._toast = setTimeout(() => this.setState({toast: null}), 2600);
+  }
+
+  btn(kind) {
+    const base = "width:100%;min-height:48px;border-radius:12px;font-family:inherit;font-size:15px;font-weight:700;line-height:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 180ms ease;padding:0 16px;";
+    if (kind === "primary") return base + "border:0;background:#FDC830;color:#1A1A1A;";
+    if (kind === "secondary") return base + "border:1px solid #1A1A1A;background:transparent;color:#1A1A1A;";
+    return "width:100%;min-height:44px;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;line-height:18px;color:#666666;cursor:pointer;";
+  }
+
+  renderVals() {
+    const step = this.props.startStep && !this._touched ? this.props.startStep : this.state.step;
+    const go = (s) => () => { this._touched = true; this.buzz("tap"); this.setState({step: s}); };
+    const incomplete = this.state.code.some(d => !d);
+    return {
+      sheetVisible: !this.state.closed,
+      dismissSheet: () => { this.buzz("tap"); this.setState({closed: true}); this.say("Due logged. You're back online."); },
+      isReview: step === "review",
+      isOtp: step === "otp",
+      isDone: step === "done",
+      isDeclined: step === "declined",
+      scrimStyle: "position:absolute;inset:0;background:rgba(26,26,26,"
+        + ((this.props.scrimStrength ?? 32) / 100) + ");display:flex;align-items:flex-end;justify-content:center",
+      primaryBtn: this.btn("primary"),
+      secondaryBtn: this.btn("secondary"),
+      linkBtn: this.btn("link"),
+      goReview: go("review"),
+      goDeclined: go("declined"),
+      goOtp: () => { this._touched = true; this.buzz("tap"); this.setState({step: "otp", after: "due", code: ["", "", "", "", "", ""], codeError: false}); },
+      goAltCode: () => { this._touched = true; this.buzz("tap"); this.setState({step: "otp", after: "alt", code: ["", "", "", "", "", ""], codeError: false}); },
+      codeIntro: this.state.after === "alt"
+        ? "Your rider keeps an emergency code in their trip details. Enter it below to request another payment method."
+        : "Your rider keeps an emergency code in their trip details. Enter it below to confirm the due.",
+      confirmLabel: this.state.after === "alt" ? "Confirm & request payment" : "Confirm & mark as due",
+      boxes: this.state.code.map((v, i) => ({
+        value: v,
+        aria: "Character " + (i + 1),
+        ref: (el) => { this._refs[i] = el; },
+        onChange: (e) => this.setDigit(i, e.target.value),
+        onKeyDown: (e) => this.digitKey(i, e),
+        style: "flex:1;min-width:0;height:54px;border-radius:11px;text-align:center;font-family:inherit;font-size:20px;font-weight:700;color:#1A1A1A;background:#FFFFFF;outline:none;padding:0;text-transform:uppercase;letter-spacing:0.5px;"
+          + (this.state.codeError ? "border:1px solid #EA4335;" : (v ? "border:1px solid #1A1A1A;" : "border:1px solid #E8E8E8;"))
+      })),
+      primaryLink: this.btn("primary") + ";text-decoration:none",
+      tapBuzz: () => this.buzz("tap"),
+      codeError: this.state.codeError,
+      codeIncomplete: incomplete,
+      errGlyph: "width:14px;height:14px;flex-shrink:0;margin-top:2px;background:#EA4335;-webkit-mask:url('https://unpkg.com/lucide-static@0.469.0/icons/circle-alert.svg') center/contain no-repeat;mask:url('https://unpkg.com/lucide-static@0.469.0/icons/circle-alert.svg') center/contain no-repeat",
+      confirmBtn: incomplete
+        ? "width:100%;min-height:48px;border-radius:12px;border:0;background:#E8E8E8;color:#AAAAAA;font-family:inherit;font-size:15px;font-weight:700;line-height:20px;display:flex;align-items:center;justify-content:center;padding:0 16px;cursor:not-allowed"
+        : this.btn("primary"),
+      submitCode: () => this.submit(),
+      reportIssue: () => { this.buzz("tap"); this.say("Issue reported. Support will follow up on this trip."); },
+      altSent: this.state.sent,
+      altPending: !this.state.sent,
+      requestAlternate: () => {
+        if (this.state.sent) return;
+        this.buzz("tap");
+        this.setState({sent: true});
+        this.say("Alternate payment requested from Ramesh.");
+      },
+      toast: this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

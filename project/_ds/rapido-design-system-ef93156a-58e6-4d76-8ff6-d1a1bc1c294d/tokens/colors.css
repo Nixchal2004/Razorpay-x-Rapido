@@ -1,0 +1,66 @@
+/* Rapido DS — Color. Values transcribed verbatim from the Figma "Rapido Colors"
+   variable collection and the "Rapido DS — Colors" specimen frame. */
+:root{
+  /* Primary brand */
+  --rapido-yellow:#FDC830;
+  --rapido-yellow-light:#FFF3CC;
+  --rapido-yellow-dark:#E5A800;
+  --rapido-black:#1A1A1A;
+  --rapido-white:#FFFFFF;
+
+  /* Neutrals — 10 steps */
+  --gray-50:#FAFAFA;
+  --gray-100:#F5F5F5;
+  --gray-200:#E8E8E8;
+  --gray-300:#D1D1D1;
+  --gray-400:#AAAAAA;
+  --gray-500:#888888;
+  --gray-600:#666666;
+  --gray-700:#4A4A4A;
+  --gray-800:#333333;
+  --gray-900:#212121;
+
+  /* Semantic */
+  --success:#34A853;
+  --success-light:#E8F5E9;
+  --error:#EA4335;
+  --error-light:#FDECEA;
+  --warning:#FBBC04;
+  --warning-light:#FFF8E1;
+  --info:#4285F4;
+  --info-light:#E3F2FD;
+
+  /* Semantic aliases — use these in product code */
+  --text-primary:var(--rapido-black);
+  --text-secondary:var(--gray-600);
+  --text-tertiary:var(--gray-500);
+  --text-inverse:var(--rapido-white);
+  --text-link:var(--info);
+  --text-positive:var(--success);
+  --text-negative:var(--error);
+
+  --surface-page:var(--rapido-white);
+  --surface-app:var(--gray-50);
+  --surface-card:var(--rapido-white);
+  --surface-sunken:var(--gray-100);
+  --surface-accent:var(--rapido-yellow-light);
+  --surface-brand:var(--rapido-yellow);
+
+  --border-subtle:var(--gray-100);
+  --border-default:var(--gray-200);
+  --border-strong:var(--gray-300);
+  /* Card hairlines in the kit are drawn one step lighter than --border-default */
+  --border-card:#F0F0F0;
+  --border-navbar:#EBEBEB;
+
+  --action-primary-bg:var(--rapido-yellow);
+  --action-primary-bg-press:var(--rapido-yellow-dark);
+  --action-primary-fg:var(--rapido-black);
+  --action-secondary-bg:transparent;
+  --action-secondary-border:var(--rapido-black);
+  --action-secondary-fg:var(--rapido-black);
+  --action-text-fg:var(--rapido-yellow-dark);
+
+  --route-pickup:var(--success);
+  --route-drop:var(--error);
+}

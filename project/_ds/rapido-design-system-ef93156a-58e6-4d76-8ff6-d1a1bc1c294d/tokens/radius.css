@@ -1,0 +1,17 @@
+/* Rapido DS — Corner radius. From the "Rapido Spacing" collection (radius/*). */
+:root{
+  --radius-none:0px;
+  --radius-sm:4px;
+  --radius-md:8px;
+  --radius-lg:12px;
+  --radius-xl:16px;
+  --radius-2xl:20px;
+  --radius-full:999px;
+
+  /* In-use aliases */
+  --radius-card:12px;
+  --radius-button:12px;
+  --radius-input:12px;
+  --radius-badge:999px;
+  --radius-pill:999px;
+}

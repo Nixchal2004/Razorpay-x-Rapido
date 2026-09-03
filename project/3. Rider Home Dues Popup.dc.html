@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/radius.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-tokens.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-typography.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/components/_generated/fig-assets.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/base.css">
+<link rel="stylesheet" href="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/styles.css">
+<script src="_ds/rapido-design-system-ef93156a-58e6-4d76-8ff6-d1a1bc1c294d/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>body{margin:0;background:#EDEBE7;display:flex;justify-content:center;align-items:flex-start;padding:32px 0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}*{box-sizing:border-box}a{color:#4285F4}a:hover{color:#1A1A1A}::-webkit-scrollbar{width:0}@keyframes duesPop{0%{opacity:0;transform:translateY(-140%)}70%{opacity:1;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}</style>
+</helmet>
+<div style="width:390px;height:844px;background:#FFFFFF;display:flex;flex-direction:column;overflow:hidden;position:relative;border-radius:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+
+<div style="flex-shrink:0;background:#FFFFFF"><x-import component-from-global-scope="RapidoDesignSystem_ef9315.StatusBar" hint-size="390px,54px"></x-import></div>
+
+<sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
+  <div style="flex-shrink:0;padding:6px 16px 12px">
+    <div role="button" onClick="{{ openDues }}" style="position:relative;background:#FFFFFF;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,0.051),inset 0 0 0 1px #F0F0F0;overflow:hidden;cursor:pointer;animation:duesPop 520ms cubic-bezier(0.22,1.1,0.36,1) 260ms both" style-hover="background:rgba(0,0,0,0.02)" style-active="background:#F5F5F5">
+      <div style="height:4px;background:#FDC830"></div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px 14px 16px; background-color: var(--action-primary-bg)">
+        <div style="width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background-color: var(--gray-50)">
+          <span style="font-weight:800;font-size:19px;line-height:1;color:#1A1A1A">₹</span>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;padding-right:14px">
+          <span style="font-weight:700;font-size:15px;line-height:20px;color:#1A1A1A;font-variant-numeric:tabular-nums">{{ headline }}</span>
+          <span style="font-weight: 400; font-size: 13px; line-height: 17px; color: var(--gray-600)">Tap to view your Dues dashboard</span>
+        </div>
+        <i data-lucide="chevron-right" style="width: 18px; height: 18px; color: #888888; flex-shrink: 0; background-color: var(--rapido-yellow)"></i>
+      </div>
+      
+    </div>
+  </div>
+</sc-if>
+
+<div style="flex:1;min-height:0;position:relative;background:#DDE3E0 url('assets/map-bangalore.png') center/cover no-repeat">
+  <div style="position:absolute;left:50%;top:38%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px">
+    <div style="background:#34A853;border-radius:8px;padding:6px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.051)">
+      <span style="font-weight:700;font-size:11px;line-height:14px;color:#FFFFFF;white-space:nowrap">Pickup Point</span>
+    </div>
+    <span style="width:12px;height:12px;border-radius:50%;background:#34A853;box-shadow:0 0 0 4px rgba(52,168,83,0.25)"></span>
+  </div>
+  <div style="position:absolute;left:16px;right:16px;bottom:14px;background:rgba(255,255,255,0.82);backdrop-filter:blur(10px);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.051)">
+    <span style="width:9px;height:9px;border-radius:50%;background:#34A853;flex-shrink:0"></span>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+      <span style="font-weight:600;font-size:10px;line-height:1;letter-spacing:0.6px;color:#666666">PICKUP POINT</span>
+      <span style="font-weight:700;font-size:13px;line-height:17px;color:#1A1A1A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">80 Feet Road, Koramangala 5th Block</span>
+    </div>
+    <span style="font-weight:700;font-size:12px;line-height:16px;color:#E5A800;flex-shrink:0">Change</span>
+  </div>
+</div>
+
+<div style="flex-shrink:0;background:#FFFFFF;padding:14px 16px 6px;display:flex;flex-direction:column;gap:12px">
+  <div style="display:flex;align-items:center;gap:10px;background:#F5F5F5;border-radius:12px;padding:13px 14px">
+    <i data-lucide="search" style="width:18px;height:18px;color:#888888;flex-shrink:0"></i>
+    <span style="font-weight:600;font-size:14px;line-height:18px;color:#666666">Where do you want to go?</span>
+  </div>
+  <div style="display:flex;flex-direction:column">
+    <sc-for list="{{ places }}" as="place" hint-placeholder-count="3">
+      <div style="{{ place.wrapStyle }}">
+        <div style="width:32px;height:32px;border-radius:999px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i data-lucide="{{ place.icon }}" style="width:16px;height:16px;color:#888888"></i>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+          <span style="font-weight:600;font-size:14px;line-height:18px;color:#1A1A1A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ place.name }}</span>
+          <span style="font-weight:400;font-size:12px;line-height:16px;color:#888888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ place.detail }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<div style="flex-shrink:0;background:#FFFFFF;box-shadow:inset 0 1px 0 #EBEBEB;display:flex;padding:8px 0 6px">
+  <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+    <button type="button" onClick="{{ item.select }}" style="flex:1;border:0;background:transparent;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;position:relative">
+      <i data-lucide="{{ item.icon }}" style="width:21px;height:21px;color:{{ item.color }}"></i>
+      <span style="font-size:10px;line-height:1;font-weight:{{ item.weight }};color:{{ item.color }}">{{ item.label }}</span>
+      <sc-if value="{{ item.showDot }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;top:2px;right:20px;width:8px;height:8px;border-radius:999px;background:#EA4335"></span>
+      </sc-if>
+    </button>
+  </sc-for>
+</div>
+<div style="height:22px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:134px;height:5px;border-radius:999px;background:#1A1A1A"></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:908},&quot;duesCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:1,&quot;max&quot;:9,&quot;tsType&quot;:&quot;number&quot;},&quot;duesAmount&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;₹340&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const PLACES = [
+  {icon:"clock", name:"HSR Layout Sector 2", detail:"27th Main Road, Bangalore 560102"},
+  {icon:"clock", name:"MG Road Metro Station", detail:"Mahatma Gandhi Road, Bangalore 560001"},
+  {icon:"briefcase", name:"Work", detail:"Embassy Tech Village, Devarabisanahalli"}
+];
+
+class Component extends DCLogic {
+  state = {dismissed: false};
+
+  icons() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidMount() { this.icons(); this._i = setInterval(() => this.icons(), 400); }
+  componentDidUpdate() { this.icons(); }
+  componentWillUnmount() { clearInterval(this._i); }
+
+  renderVals() {
+    const count = this.props.duesCount ?? 2;
+    const amount = this.props.duesAmount ?? "₹340";
+    return {
+      showCard: !this.state.dismissed,
+      headline: count + (count === 1 ? " due pending · " : " dues pending · ") + amount,
+      dismiss: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({dismissed: true}); },
+      openDues: () => { window.location.href = "4. Rider Dues Dashboard.dc.html"; },
+      places: PLACES.map((p, i) => ({
+        ...p,
+        wrapStyle: "display:flex;align-items:center;gap:12px;padding:11px 0;"
+          + (i < PLACES.length - 1 ? "box-shadow:inset 0 -1px 0 #F0F0F0;" : "")
+      })),
+      navItems: [
+        {icon:"bike", label:"Ride", active:true},
+        {icon:"receipt-text", label:"Dues", showDot: !this.state.dismissed},
+        {icon:"layout-grid", label:"All Services"},
+        {icon:"plane", label:"Travel"},
+        {icon:"user-round", label:"Profile"}
+      ].map(n => ({
+        ...n,
+        color: n.active ? "#E5A800" : "#888888",
+        weight: n.active ? 700 : 400,
+        showDot: !!n.showDot,
+        select: n.label === "Dues" ? () => { window.location.href = "4. Rider Dues Dashboard.dc.html"; } : () => {}
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+/* Rapido DS — minimal base. Consumers get sane defaults for type and links. */
+body{font-family:var(--font-family-base);color:var(--text-primary);background:var(--surface-page);-webkit-font-smoothing:antialiased}
+a{color:var(--text-link);text-decoration:none}
+a:hover{color:#2f6fdd;text-decoration:underline}
+a:active{color:#2a63c6}
