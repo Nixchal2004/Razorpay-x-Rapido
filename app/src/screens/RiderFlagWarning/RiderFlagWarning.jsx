@@ -17,14 +17,10 @@ import {
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
 import mapImage from '../../assets/map-bangalore.png'
+import { useAccountStatus, useDuesActions } from '../../state/DuesContext'
 import './RiderFlagWarning.css'
 
-const FLAG_COUNT = 1
-const FLAG_LIMIT = 3
 const WORDS = { 0: 'No', 1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five' }
-
-const DUES = [{ route: 'BTM Layout → Jayanagar 4th Block', date: '27 Aug, 9:20 PM', amount: '₹95', value: 95 }]
-const TOTAL = '₹' + DUES.reduce((n, d) => n + d.value, 0)
 
 const METHODS = [
   { id: 'upi', label: 'UPI · 9845* * *210', Icon: Smartphone },
@@ -56,12 +52,20 @@ const DUES_DASHBOARD_ROUTE = '/rider/dues-dashboard'
 // gets its own handler (navigate to Rider Home) rather than reusing
 // `dismiss` — reusing it originally meant this button fired the "remind you
 // later, flag still active" toast right after showing "flag removed".
+//
+// Flag count and the dues list now come from the shared Rapido Dues
+// account status/case store instead of being hardcoded. Confirming
+// payment clears every currently flagged case via the engine's payDue
+// action (no reactivation fee here — that only applies to the hard
+// Account Restricted gate at the 3-flag limit).
 export default function RiderFlagWarning() {
   const navigate = useNavigate()
   const [step, setStep] = useState('warning')
   const [method, setMethod] = useState('upi')
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
+  const account = useAccountStatus()
+  const { payDue } = useDuesActions()
 
   const say = useCallback((msg) => {
     clearTimeout(toastTimer.current)
@@ -69,8 +73,21 @@ export default function RiderFlagWarning() {
     toastTimer.current = setTimeout(() => setToast(null), 2600)
   }, [])
 
-  const remaining = Math.max(0, FLAG_LIMIT - FLAG_COUNT)
+  const flagCount = account.flagCount
+  const dues = account.flaggedCases.map((c) => ({
+    id: c.id,
+    route: c.trip.route,
+    date: new Date(c.flaggedAt ?? c.createdAt).toLocaleDateString([], { day: 'numeric', month: 'short' }),
+    amount: `₹${c.amount}`,
+  }))
+  const total = `₹${account.totalFlaggedAmount}`
+  const remaining = Math.max(0, account.flagLimit - flagCount)
   const hardGated = remaining === 0
+
+  const confirmPay = () => {
+    for (const c of account.flaggedCases) payDue(c.id, method)
+    setStep('done')
+  }
 
   const dismiss = () => {
     setStep('none')
@@ -110,7 +127,7 @@ export default function RiderFlagWarning() {
                 </div>
 
                 <span className="warning-card__headline">
-                  {FLAG_COUNT} {FLAG_COUNT === 1 ? 'flag on your account' : 'flags on your account'}
+                  {flagCount} {flagCount === 1 ? 'flag on your account' : 'flags on your account'}
                 </span>
                 <span className="warning-card__supporting">
                   {hardGated
@@ -120,8 +137,8 @@ export default function RiderFlagWarning() {
                 <span className="warning-card__instruction">Clear your pending dues to keep riding.</span>
 
                 <div className="warning-card__dues">
-                  {DUES.map((due) => (
-                    <div key={due.route} className="warning-card__due-row">
+                  {dues.map((due) => (
+                    <div key={due.id} className="warning-card__due-row">
                       <div className="warning-card__due-text">
                         <span className="warning-card__due-route">{due.route}</span>
                         <span className="warning-card__due-date">{due.date}</span>
@@ -133,7 +150,7 @@ export default function RiderFlagWarning() {
 
                 <div className="warning-card__actions">
                   <button type="button" className="btn btn--primary" onClick={() => setStep('pay')}>
-                    Clear {TOTAL} now
+                    Clear {total} now
                   </button>
                   <button type="button" className="btn btn--link" onClick={() => navigate(`${DUES_DASHBOARD_ROUTE}#flagged`)}>
                     View flagged dues
@@ -154,7 +171,7 @@ export default function RiderFlagWarning() {
                 <div className="pay-sheet__grabber" />
                 <div className="pay-sheet__row">
                   <span className="pay-sheet__title">Clear your dues</span>
-                  <span className="pay-sheet__total">{TOTAL}</span>
+                  <span className="pay-sheet__total">{total}</span>
                 </div>
                 <span className="pay-sheet__note">
                   Paying clears the flag on your account. You can book rides right after.
@@ -176,8 +193,8 @@ export default function RiderFlagWarning() {
                     )
                   })}
                 </div>
-                <button type="button" className="btn btn--primary" onClick={() => setStep('done')}>
-                  Pay {TOTAL}
+                <button type="button" className="btn btn--primary" onClick={confirmPay}>
+                  Pay {total}
                 </button>
                 <button type="button" className="btn btn--link" onClick={() => setStep('warning')}>
                   Go back

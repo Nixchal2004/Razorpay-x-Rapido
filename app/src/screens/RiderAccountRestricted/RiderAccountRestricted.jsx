@@ -3,43 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import { Check, CreditCard, Flag, Info, Landmark, Lock, Smartphone } from 'lucide-react'
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
+import { useAccountStatus, useDuesActions } from '../../state/DuesContext'
+import { FLAG_LIMIT } from '../../state/duesEngine'
 import './RiderAccountRestricted.css'
 
-const FLAG_LIMIT = 3
-const RETRIEVAL_FEE = 29
-
-const DUES = [
-  {
-    trip: 'Bike · 27 Aug, 9:20 PM',
-    route: 'BTM Layout → Jayanagar 4th Block',
-    amount: '₹95',
-    value: 95,
-    caption: 'Flagged 5 days ago',
-    reason: "Wasn't settled within the review window.",
-  },
-  {
-    trip: 'Auto · 24 Aug, 7:40 PM',
-    route: 'HSR Layout → Silk Board Junction',
-    amount: '₹150',
-    value: 150,
-    caption: 'Flagged 8 days ago',
-    reason: 'Payment retries failed and the due stayed open.',
-  },
-  {
-    trip: 'Bike · 20 Aug, 10:05 AM',
-    route: 'Koramangala → Indiranagar 100ft Road',
-    amount: '₹80',
-    value: 80,
-    caption: 'Flagged 12 days ago',
-    reason: 'No payment method could be charged.',
-  },
-]
-
-const DUES_VALUE = DUES.reduce((n, d) => n + d.value, 0)
-const DUES_TOTAL = `₹${DUES_VALUE}`
-const FEE = `₹${RETRIEVAL_FEE}`
-const TOTAL = `₹${DUES_VALUE + RETRIEVAL_FEE}`
-
+// AMBIGUITY / behavior note: this screen demonstrates the 3-flag hard
+// gate and is independently reachable from the Launcher without first
+// building up three real flagged cases through the interactive Emergency
+// + escalation flow. Rather than fabricate dues to always show exactly
+// three, it lists whatever is genuinely flagged right now on the shared
+// case store (often fewer than three when visited this way) — the
+// headline still cites the fixed FLAG_LIMIT rule itself (accurate
+// regardless of the live count), but the dues list, total, and the actual
+// payBlockedAccount action always reflect real data, never invented rows.
 const METHODS = [
   { id: 'upi', label: 'UPI · 9845* * *210', Icon: Smartphone },
   { id: 'card', label: 'Card ending 3467', Icon: CreditCard },
@@ -57,10 +33,47 @@ const HOME_ROUTE = '/rider/home'
 // on") is fully authored in this same file but wired to a hard navigation
 // to a separate out-of-scope file rather than ever setting its own "done"
 // state — wired here to show in place instead, so the flow is complete.
+function relativeDays(ts) {
+  if (!ts) return 'Just now'
+  const days = Math.round((Date.now() - ts) / (24 * 60 * 60 * 1000))
+  if (days < 1) return 'Flagged today'
+  return `Flagged ${days} ${days === 1 ? 'day' : 'days'} ago`
+}
+
 export default function RiderAccountRestricted() {
   const navigate = useNavigate()
   const [step, setStep] = useState('gate')
   const [method, setMethod] = useState('upi')
+  const [paidTotal, setPaidTotal] = useState(null)
+  const account = useAccountStatus()
+  const { payBlockedAccount } = useDuesActions()
+
+  const dues = account.flaggedCases.map((c) => ({
+    id: c.id,
+    trip: `${c.trip.vehicle} · ${new Date(c.flaggedAt ?? c.createdAt).toLocaleDateString([], { day: 'numeric', month: 'short' })}, ${new Date(c.flaggedAt ?? c.createdAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`,
+    route: c.trip.route,
+    amount: `₹${c.amount}`,
+    caption: relativeDays(c.flaggedAt),
+    reason: c.flaggedReason,
+  }))
+  const duesTotal = `₹${account.totalFlaggedAmount}`
+  // The retrieval fee only actually applies when the account is genuinely
+  // blocked (matching account.totalToClear's own logic) — shown as ₹0
+  // rather than hiding the line, so the breakdown's arithmetic stays
+  // visibly consistent (dues + fee = total) without restructuring the
+  // screen for the standalone-demo case where this fee doesn't apply yet.
+  const fee = `₹${account.blocked ? account.retrievalFee : 0}`
+  const total = `₹${account.totalToClear}`
+
+  // account.totalToClear goes to 0 the instant payBlockedAccount clears
+  // every flagged case, so the "done" success copy captures what was
+  // actually paid *before* the action runs rather than re-reading the
+  // now-empty live total afterward.
+  const confirmPay = () => {
+    setPaidTotal(account.totalToClear)
+    payBlockedAccount(method)
+    setStep('done')
+  }
 
   return (
     <PhoneFrame background="#FFFFFF">
@@ -84,8 +97,8 @@ export default function RiderAccountRestricted() {
           <div className="rar__section">
             <span className="rar__section-label">FLAGGED DUES</span>
             <div className="rar__dues-list">
-              {DUES.map((due, i) => (
-                <div key={due.route} className={`due-row${i < DUES.length - 1 ? ' due-row--divider' : ''}`}>
+              {dues.map((due, i) => (
+                <div key={due.id} className={`due-row${i < dues.length - 1 ? ' due-row--divider' : ''}`}>
                   <div className="due-row__top">
                     <div className="due-row__icon">
                       <Flag size={16} color="#EA4335" />
@@ -113,18 +126,18 @@ export default function RiderAccountRestricted() {
             <div className="pay-summary">
               <div className="pay-summary__row pay-summary__row--divider">
                 <span>Outstanding dues (all flagged)</span>
-                <span>{DUES_TOTAL}</span>
+                <span>{duesTotal}</span>
               </div>
               <div className="pay-summary__row pay-summary__row--divider">
                 <span>Account retrieval fee (one-time)</span>
-                <span>{FEE}</span>
+                <span>{fee}</span>
               </div>
               <div className="pay-summary__row pay-summary__row--total">
                 <span>Total</span>
-                <span>{TOTAL}</span>
+                <span>{total}</span>
               </div>
             </div>
-            <span className="rar__fee-note">A one-time {FEE} fee applies to reactivate a paused account.</span>
+            <span className="rar__fee-note">A one-time {fee} fee applies to reactivate a paused account.</span>
           </div>
 
           <div className="rar__info-row">
@@ -135,7 +148,7 @@ export default function RiderAccountRestricted() {
 
         <div className="rar__footer">
           <button type="button" className="btn btn--primary" onClick={() => setStep('pay')}>
-            Pay {TOTAL} and continue
+            Pay {total} and continue
           </button>
         </div>
         <div className="rar__home-indicator">
@@ -148,7 +161,7 @@ export default function RiderAccountRestricted() {
               <div className="pay-sheet__grabber" />
               <div className="pay-sheet__row">
                 <span className="pay-sheet__title">Clear your dues</span>
-                <span className="pay-sheet__total">{TOTAL}</span>
+                <span className="pay-sheet__total">{total}</span>
               </div>
               <span className="pay-sheet__note">This clears all flags and re-enables booking immediately.</span>
               <div className="pay-sheet__methods">
@@ -168,8 +181,8 @@ export default function RiderAccountRestricted() {
                   )
                 })}
               </div>
-              <button type="button" className="btn btn--primary" onClick={() => setStep('done')}>
-                Pay {TOTAL}
+              <button type="button" className="btn btn--primary" onClick={confirmPay}>
+                Pay {total}
               </button>
             </div>
           </div>
@@ -183,7 +196,7 @@ export default function RiderAccountRestricted() {
               </div>
               <span className="done-card__headline">Booking is back on</span>
               <span className="done-card__note">
-                {TOTAL} paid and all flags cleared. You can book rides again right away.
+                ₹{paidTotal} paid and all flags cleared. You can book rides again right away.
               </span>
               <button type="button" className="btn btn--primary" onClick={() => navigate(HOME_ROUTE)}>
                 Book a ride

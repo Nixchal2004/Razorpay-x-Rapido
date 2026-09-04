@@ -14,30 +14,37 @@ import {
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
 import mapImage from '../../assets/map-bangalore.png'
+import { useCase } from '../../state/DuesContext'
+import { CaseState, EMERGENCY_CODE } from '../../state/duesEngine'
 import './RiderTripDetails.css'
 
-const EMERGENCY_CODE = 'ABC123'
+// Same shared case id the Captain Emergency flow's EmergencySheet detects
+// and diagnoses (TripDetails.jsx's CASE_ID) — this is the rider side of
+// that exact case.
+const CASE_ID = 'RD1748392045'
 
-// How long the screen holds before auto-advancing (ms). Matches the
-// prototype's fixed 5000ms timer.
-const AUTO_ADVANCE_MS = 5000
-
-// Where this screen leads once the trip's payment fails to settle.
-// "C. Final Fare Moved to Dues.dc.html", implemented as RiderFareMovedToDues.
+// Where this screen leads once the captain confirms the due.
+// "Rider Fare Moved to Dues.dc.html", implemented as RiderFareMovedToDues.
 const NEXT_ROUTE = '/rider/fare-moved-to-dues'
 
 // Rider-flow trip-details screen — port of `R. Final Emergency.dc.html`.
 // Everything on this screen is static except the eye toggle on the
-// Emergency Code card, exactly as the source specifies; it auto-advances
-// on a fixed timer, with no other navigation available.
+// Emergency Code card, exactly as the source specifies. The source has no
+// fixed timer — it polls localStorage for the captain's confirmation and
+// advances only once that lands (and only for the "due" outcome, not
+// "alternate payment requested"). Both screens now run in the same React
+// app sharing one engine instance, so this is simpler than a poll: it
+// just watches the same case the captain's sheet writes to and advances
+// the instant its state becomes CONFIRMED — the state engine driving the
+// UI, not a predetermined timer.
 export default function RiderTripDetails() {
   const navigate = useNavigate()
   const [revealed, setRevealed] = useState(false)
+  const dueCase = useCase(CASE_ID)
 
   useEffect(() => {
-    const timer = setTimeout(() => navigate(NEXT_ROUTE), AUTO_ADVANCE_MS)
-    return () => clearTimeout(timer)
-  }, [navigate])
+    if (dueCase?.state === CaseState.CONFIRMED) navigate(NEXT_ROUTE)
+  }, [dueCase?.state, navigate])
 
   const toggleCode = () => {
     if (navigator.vibrate) navigator.vibrate(8)

@@ -3,10 +3,11 @@ import { Bike, Briefcase, ChevronRight, Clock, LayoutGrid, Plane, ReceiptText, S
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
 import mapImage from '../../assets/map-bangalore.png'
+import { useCases } from '../../state/DuesContext'
+import { CaseState } from '../../state/duesEngine'
 import './RiderHome.css'
 
-const DUES_COUNT = 2
-const DUES_AMOUNT = '₹340'
+const OUTSTANDING_STATES = [CaseState.CONFIRMED, CaseState.FLAGGED, CaseState.ALT_PAYMENT_REQUESTED]
 
 const PLACES = [
   { Icon: Clock, name: 'HSR Layout Sector 2', detail: '27th Main Road, Bangalore 560102' },
@@ -34,8 +35,17 @@ const DUES_DASHBOARD_ROUTE = '/rider/dues-dashboard'
 // never wired to anything rendered — so it's always visible here too, and
 // the whole card is the one tap target (matching the source's `onClick` on
 // the card itself, not a separate close button).
+//
+// Count/amount now come from the shared Rapido Dues case store instead of
+// being hardcoded — the source never designed a zero-dues state for this
+// card (its count prop was never zero), so it's only rendered when there
+// is at least one outstanding case, rather than showing "0 dues pending".
 export default function RiderHome() {
   const navigate = useNavigate()
+  const cases = useCases()
+  const outstanding = cases.filter((c) => OUTSTANDING_STATES.includes(c.state))
+  const duesCount = outstanding.length
+  const duesAmount = outstanding.reduce((sum, c) => sum + c.amount, 0)
 
   return (
     <PhoneFrame background="#FFFFFF">
@@ -45,21 +55,23 @@ export default function RiderHome() {
         </div>
 
         <div className="rh__card-row">
-          <button type="button" className="dues-card" onClick={() => navigate(DUES_DASHBOARD_ROUTE)}>
-            <div className="dues-card__stripe" />
-            <div className="dues-card__row">
-              <div className="dues-card__icon">
-                <span>₹</span>
+          {duesCount > 0 && (
+            <button type="button" className="dues-card" onClick={() => navigate(DUES_DASHBOARD_ROUTE)}>
+              <div className="dues-card__stripe" />
+              <div className="dues-card__row">
+                <div className="dues-card__icon">
+                  <span>₹</span>
+                </div>
+                <div className="dues-card__text">
+                  <span className="dues-card__headline">
+                    {duesCount} {duesCount === 1 ? 'due' : 'dues'} pending · ₹{duesAmount}
+                  </span>
+                  <span className="dues-card__subtext">Tap to view your Dues dashboard</span>
+                </div>
+                <ChevronRight size={18} color="#888888" />
               </div>
-              <div className="dues-card__text">
-                <span className="dues-card__headline">
-                  {DUES_COUNT} {DUES_COUNT === 1 ? 'due' : 'dues'} pending · {DUES_AMOUNT}
-                </span>
-                <span className="dues-card__subtext">Tap to view your Dues dashboard</span>
-              </div>
-              <ChevronRight size={18} color="#888888" />
-            </div>
-          </button>
+            </button>
+          )}
         </div>
 
         <div className="rh__map" style={{ backgroundImage: `url(${mapImage})` }}>

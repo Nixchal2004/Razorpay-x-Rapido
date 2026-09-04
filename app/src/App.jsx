@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { DuesProvider } from './state/DuesContext'
 import Launcher from './screens/Launcher/Launcher'
 import TripDetails from './screens/TripDetails/TripDetails'
 import Splash from './screens/Splash'
@@ -84,41 +85,43 @@ import RiderDuesCleared from './screens/RiderDuesCleared/RiderDuesCleared'
 //       strip's "Screen 8" destination is a stub in the source itself — a
 //       toast, not a real screen — reproduced literally)
 //     "Rider Dues.dc.html":                 /rider/dues -> RiderDues
-//       (every pending row's target, regardless of which row was tapped —
-//       the source never passes an id/amount through, so this is always
-//       the same fixed pending-due detail screen)
+//       (a confirmed pending row's target; now carries `?caseId=` so it
+//       shows that specific case's real timeline/amount instead of the
+//       source's original always-the-same-fixed-screen behavior — see
+//       state/duesEngine.js)
 //     "7. Rider Dues Cleared.dc.html":      /rider/dues-cleared -> RiderDuesCleared
 //       (reached from paying a due in either RiderDuesDashboard or
-//       RiderDues; only `?amount=` is passed by either caller, so the
-//       source's `hardBlock` prop always falls back to its own default of
-//       `true` and this screen always shows "Flag removed" copy — even
-//       when clearing an ordinary pending due, not a flagged one. Kept
-//       literal rather than corrected.)
+//       RiderDues; both now pass `?caseId=`, so the "Flag removed" vs
+//       "Payment settled" copy is driven by whether that case was
+//       actually FLAGGED before being paid, replacing the source's
+//       always-true `hardBlock` default)
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Launcher />} />
-        <Route path="/captain/emergency" element={<TripDetails />} />
-        <Route path="/splash" element={<Splash />} />
-        <Route path="/home" element={<CaptainHome />} />
-        <Route
-          path="/dues/splash"
-          element={<Splash to="/dues" continueLabel="Continue to Dues" />}
-        />
-        <Route path="/dues" element={<DuesLedger />} />
-        <Route path="/rider/emergency" element={<RiderTripDetails />} />
-        <Route path="/rider/fare-moved-to-dues" element={<RiderFareMovedToDues />} />
-        <Route path="/rider/flag-warning-splash" element={<RiderFlagWarningSplash />} />
-        <Route path="/rider/flag-warning" element={<RiderFlagWarning />} />
-        <Route path="/rider/restricted-splash" element={<RiderRestrictedSplash />} />
-        <Route path="/rider/account-restricted" element={<RiderAccountRestricted />} />
-        <Route path="/rider/home-splash" element={<RiderHomeSplash />} />
-        <Route path="/rider/home" element={<RiderHome />} />
-        <Route path="/rider/dues-dashboard" element={<RiderDuesDashboard />} />
-        <Route path="/rider/dues" element={<RiderDues />} />
-        <Route path="/rider/dues-cleared" element={<RiderDuesCleared />} />
-      </Routes>
-    </BrowserRouter>
+    <DuesProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Launcher />} />
+          <Route path="/captain/emergency" element={<TripDetails />} />
+          <Route path="/splash" element={<Splash />} />
+          <Route path="/home" element={<CaptainHome />} />
+          <Route
+            path="/dues/splash"
+            element={<Splash to="/dues" continueLabel="Continue to Dues" />}
+          />
+          <Route path="/dues" element={<DuesLedger />} />
+          <Route path="/rider/emergency" element={<RiderTripDetails />} />
+          <Route path="/rider/fare-moved-to-dues" element={<RiderFareMovedToDues />} />
+          <Route path="/rider/flag-warning-splash" element={<RiderFlagWarningSplash />} />
+          <Route path="/rider/flag-warning" element={<RiderFlagWarning />} />
+          <Route path="/rider/restricted-splash" element={<RiderRestrictedSplash />} />
+          <Route path="/rider/account-restricted" element={<RiderAccountRestricted />} />
+          <Route path="/rider/home-splash" element={<RiderHomeSplash />} />
+          <Route path="/rider/home" element={<RiderHome />} />
+          <Route path="/rider/dues-dashboard" element={<RiderDuesDashboard />} />
+          <Route path="/rider/dues" element={<RiderDues />} />
+          <Route path="/rider/dues-cleared" element={<RiderDuesCleared />} />
+        </Routes>
+      </BrowserRouter>
+    </DuesProvider>
   )
 }

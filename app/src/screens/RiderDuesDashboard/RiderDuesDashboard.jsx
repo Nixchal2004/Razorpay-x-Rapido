@@ -18,21 +18,28 @@ import {
 } from 'lucide-react'
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
+import { useAccountStatus, useCases, useDuesActions } from '../../state/DuesContext'
+import { CaseState } from '../../state/duesEngine'
 import './RiderDuesDashboard.css'
 
-const FLAG_COUNT = 1
-const FLAG_LIMIT = 3
-
-const DUES = [
-  { id: 'RD1748392045', tab: 'pending', trip: 'Bike · Today, 9:34 AM', route: 'Koramangala 5th Block → HSR Layout', amount: '₹120', caption: 'Retrying until 6:15 PM today' },
-  { id: 'RD1748391884', tab: 'pending', trip: 'Auto · Yesterday, 8:30 PM', route: 'Indiranagar → MG Road Metro', amount: '₹220', caption: 'Retrying until 6:15 PM today' },
-  { id: 'RD1748390977', tab: 'flagged', trip: 'Bike · 27 Aug, 9:20 PM', route: 'BTM Layout → Jayanagar 4th Block', amount: '₹95', caption: 'Flagged 2 days ago', reason: "Wasn't settled within the review window." },
-  { id: 'RD1748390211', tab: 'settled', trip: 'Bike · 29 Aug, 7:05 PM', route: 'BTM Layout → Silk Board Junction', amount: '₹95', caption: 'Paid by UPI' },
-  { id: 'RD1748388760', tab: 'settled', trip: 'Auto · 28 Aug, 1:40 PM', route: 'Jayanagar → Koramangala 8th Block', amount: '₹180', caption: 'Paid by UPI' },
-  { id: 'RD1748386402', tab: 'settled', trip: 'Bike · 26 Aug, 10:15 AM', route: 'MG Road → Indiranagar 100ft Road', amount: '₹60', caption: 'Auto-retry succeeded' },
-]
+// Maps the shared engine case state onto this screen's Pending/Flagged/
+// Settled tabs. UNDER_REVIEW cases live in the Pending tab alongside
+// CONFIRMED/ALT_PAYMENT_REQUESTED ones (per chat1's Screen 7 spec: "a
+// Status Badge in either info-light 'Under review' ... or warning-light
+// 'Pending'" — both badge variants belong to the same tab), distinguished
+// only by badge style, restoring the "Under review" badge the original
+// source authored but never had live data to show (its DUES fixture never
+// included a `state:"review"` row).
+const TAB_OF = {
+  [CaseState.UNDER_REVIEW]: 'pending',
+  [CaseState.CONFIRMED]: 'pending',
+  [CaseState.ALT_PAYMENT_REQUESTED]: 'pending',
+  [CaseState.FLAGGED]: 'flagged',
+  [CaseState.RESOLVED]: 'settled',
+}
 
 const STATE_STYLE = {
+  review: { Icon: Clock, bubbleBg: '#E3F2FD', bubbleFg: '#4285F4', badgeBg: '#E3F2FD', badgeFg: '#1A5FB8', badge: 'Under review' },
   pending: { Icon: Clock, bubbleBg: '#FFF8E1', bubbleFg: '#B98A00', badgeBg: '#FFF8E1', badgeFg: '#8A6400', badge: 'Pending' },
   flagged: { Icon: Flag, bubbleBg: '#FDECEA', bubbleFg: '#EA4335', badgeBg: '#FDECEA', badgeFg: '#B0342A', badge: 'Flagged' },
   settled: { Icon: Check, bubbleBg: '#F5F5F5', bubbleFg: '#888888', badgeBg: '#F5F5F5', badgeFg: '#666666', badge: 'Settled' },
@@ -55,10 +62,49 @@ const NAV_ITEMS = [
   { key: 'profile', label: 'Profile', Icon: UserRound },
 ]
 
-// "Rider Dues.dc.html" — tapping any pending row. The source never passes
-// the tapped row's id/amount along, so this is the same fixed destination
-// regardless of which pending row was tapped, reproduced literally.
+// "Rider Dues.dc.html" — tapping a confirmed pending row. The source never
+// passed the tapped row's id/amount along (every row led to the same
+// fixed screen); now that a real case store exists, the row's id is
+// passed as `?caseId=` so the detail screen shows that specific case
+// instead of always the same predetermined example — see RiderDues.jsx.
+// Rows still awaiting a captain decision (Under review) aren't clickable
+// — there's no PRD-designed screen for that state (chat5 explicitly
+// removed the one that used to show it), so surfacing them here as a
+// distinct badge is as far as this state goes without inventing a screen.
 const DUES_DETAIL_ROUTE = '/rider/dues'
+
+function relativeCaption(ts, prefix) {
+  const diffMin = Math.max(0, Math.round((Date.now() - ts) / 60000))
+  const text =
+    diffMin < 60
+      ? `${diffMin} min ago`
+      : diffMin < 24 * 60
+        ? `${Math.round(diffMin / 60)}h ago`
+        : `${Math.round(diffMin / (24 * 60))}d ago`
+  return prefix ? `${prefix} ${text}` : text
+}
+
+function toRow(c) {
+  const tab = TAB_OF[c.state]
+  if (!tab) return null
+  const styleKey = c.state === CaseState.UNDER_REVIEW ? 'review' : tab
+  let caption
+  if (tab === 'flagged') caption = relativeCaption(c.flaggedAt, 'Flagged')
+  else if (tab === 'settled') caption = c.paidVia === 'auto-retry' ? 'Auto-retry succeeded' : `Paid by ${c.paidVia?.toUpperCase() ?? 'UPI'}`
+  else if (styleKey === 'review') caption = 'Waiting on your captain to confirm'
+  else caption = c.retryDeadline ? 'Retrying until the review window closes' : ''
+  return {
+    id: c.id,
+    tab,
+    styleKey,
+    trip: `${c.trip.vehicle} · ${relativeCaption(c.createdAt)}`,
+    route: c.trip.route,
+    amount: `₹${c.amount}`,
+    caption,
+    reason: c.flaggedReason,
+    clickable: c.state === CaseState.CONFIRMED || c.state === CaseState.ALT_PAYMENT_REQUESTED,
+  }
+}
 
 // Rider Dues Dashboard — port of `4. Rider Dues Dashboard.dc.html`, reached
 // from both the Home dues-popup card and the Dues nav item across the Home
@@ -66,19 +112,25 @@ const DUES_DETAIL_ROUTE = '/rider/dues'
 // list, and a payment sheet for flagged dues. The flag strip's "Screen 8 —
 // flags and account status" is authored as a stub in the source itself
 // (it shows a toast instead of navigating anywhere) — reproduced literally
-// rather than invented. `state.paid` in the source is set nowhere (paying
-// always hard-navigates away), so a "Paid" row state and the empty-tab
-// panels are genuinely unreachable and are skipped here, matching how
-// other unreachable dead code has been treated throughout this app.
+// rather than invented.
+//
+// Rows and the account flag count now come from the shared Rapido Dues
+// case store — this and the Captain ledger read the exact same cases.
+// Paying a flagged due here calls the engine's payDue action (ACT step)
+// instead of just navigating with a query string, so the case is
+// genuinely resolved before Dues Cleared ever renders.
 export default function RiderDuesDashboard() {
   const navigate = useNavigate()
   const location = useLocation()
   const initialTab = TABS.includes(location.hash.replace('#', '')) ? location.hash.replace('#', '') : 'pending'
   const [tab, setTab] = useState(initialTab)
-  const [payRow, setPayRow] = useState(null)
+  const [payRowId, setPayRowId] = useState(null)
   const [method, setMethod] = useState('upi')
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
+  const cases = useCases()
+  const account = useAccountStatus()
+  const { payDue } = useDuesActions()
 
   const say = useCallback((msg) => {
     clearTimeout(toastTimer.current)
@@ -86,13 +138,16 @@ export default function RiderDuesDashboard() {
     toastTimer.current = setTimeout(() => setToast(null), 2600)
   }, [])
 
-  const rows = useMemo(() => DUES.filter((d) => d.tab === tab), [tab])
-  const remaining = Math.max(0, FLAG_LIMIT - FLAG_COUNT)
+  const allRows = useMemo(() => cases.map(toRow).filter(Boolean), [cases])
+  const rows = allRows.filter((r) => r.tab === tab)
+  const payRow = allRows.find((r) => r.id === payRowId) ?? null
+  const remaining = Math.max(0, account.flagLimit - account.flagCount)
 
   const confirmPay = () => {
     if (!payRow) return
-    const digits = payRow.amount.replace(/[^0-9]/g, '')
-    navigate(`/rider/dues-cleared?amount=${digits}`)
+    payDue(payRow.id, method)
+    setPayRowId(null)
+    navigate(`/rider/dues-cleared?caseId=${payRow.id}`)
   }
 
   return (
@@ -109,16 +164,18 @@ export default function RiderDuesDashboard() {
           <span className="rdd__title">Dues</span>
         </div>
 
-        <button type="button" className="rdd__flag-strip" onClick={() => say('Screen 8 — flags and account status — is not built yet.')}>
-          <AlertTriangle size={16} color="#B98A00" />
-          <div className="rdd__flag-strip-text">
-            <span className="rdd__flag-strip-title">
-              {FLAG_COUNT} {FLAG_COUNT === 1 ? 'flag on your account' : 'flags on your account'}
-            </span>
-            <span className="rdd__flag-strip-note">{remaining} more will pause your ability to book rides</span>
-          </div>
-          <ChevronRight size={17} color="#B98A00" />
-        </button>
+        {account.flagCount > 0 && (
+          <button type="button" className="rdd__flag-strip" onClick={() => say('Screen 8 — flags and account status — is not built yet.')}>
+            <AlertTriangle size={16} color="#B98A00" />
+            <div className="rdd__flag-strip-text">
+              <span className="rdd__flag-strip-title">
+                {account.flagCount} {account.flagCount === 1 ? 'flag on your account' : 'flags on your account'}
+              </span>
+              <span className="rdd__flag-strip-note">{remaining} more will pause your ability to book rides</span>
+            </div>
+            <ChevronRight size={17} color="#B98A00" />
+          </button>
+        )}
 
         <div className="rdd__tabs">
           {TABS.map((t) => (
@@ -137,14 +194,13 @@ export default function RiderDuesDashboard() {
           <span className="rdd__section-label">{LABELS[tab]}</span>
           <div className="rdd__list">
             {rows.map((row, i) => {
-              const style = STATE_STYLE[row.tab]
-              const clickable = row.tab === 'pending'
+              const style = STATE_STYLE[row.styleKey]
               return (
                 <div
                   key={row.id}
                   role="button"
-                  className={`rdd-row${i < rows.length - 1 ? ' rdd-row--divider' : ''}${clickable ? ' rdd-row--clickable' : ''}`}
-                  onClick={clickable ? () => navigate(DUES_DETAIL_ROUTE) : undefined}
+                  className={`rdd-row${i < rows.length - 1 ? ' rdd-row--divider' : ''}${row.clickable ? ' rdd-row--clickable' : ''}`}
+                  onClick={row.clickable ? () => navigate(`${DUES_DETAIL_ROUTE}?caseId=${row.id}`) : undefined}
                 >
                   <div className="rdd-row__top">
                     <div className="rdd-row__bubble" style={{ background: style.bubbleBg }}>
@@ -172,7 +228,7 @@ export default function RiderDuesDashboard() {
                         className="rdd-row__pay-btn"
                         onClick={(e) => {
                           e.stopPropagation()
-                          setPayRow(row)
+                          setPayRowId(row.id)
                           setMethod('upi')
                         }}
                       >
@@ -237,7 +293,7 @@ export default function RiderDuesDashboard() {
               <button type="button" className="btn btn--primary" onClick={confirmPay}>
                 Pay {payRow.amount}
               </button>
-              <button type="button" className="btn btn--link-muted" onClick={() => setPayRow(null)}>
+              <button type="button" className="btn btn--link-muted" onClick={() => setPayRowId(null)}>
                 Go back
               </button>
             </div>

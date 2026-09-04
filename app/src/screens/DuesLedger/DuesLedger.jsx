@@ -4,30 +4,34 @@ import { Bell, ChevronLeft, ChevronRight, Flag, Info, MapPin, ShieldCheck } from
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
 import { NAV_ITEMS } from '../CaptainHome/navItems'
+import { useCases, useDuesActions } from '../../state/DuesContext'
+import { CaseState, FLAG_ELIGIBLE_HOURS, REMINDER_LIMIT } from '../../state/duesEngine'
 import './DuesLedger.css'
 
-const REMINDER_LIMIT = 3
+// Display-only trip metadata the engine doesn't model (full addresses,
+// ride distance) — the engine owns business state (amount, status, flags,
+// reminders); this is purely decorative enrichment keyed by the same
+// shared case id, same six trips as before.
+const TRIP_DETAILS = {
+  RD1748392045: { drop: 'HSR Layout, Sector 2', pickup: 'Koramangala 5th Block, 560095', dropFull: 'HSR Layout Sector 2, 560102', distanceKm: 5.2 },
+  RD1748391884: { drop: 'MG Road Metro', pickup: 'Indiranagar 12th Main, 560038', dropFull: 'MG Road Metro Station, 560001', distanceKm: 7.8 },
+  RD1748390977: { drop: 'Jayanagar 4th Block', pickup: 'BTM Layout 2nd Stage, 560076', dropFull: 'Jayanagar 4th Block, 560011', distanceKm: 4.1 },
+  RD1748390211: { drop: 'Silk Board Junction', pickup: 'BTM Layout 1st Stage, 560029', dropFull: 'Silk Board Junction, 560068', distanceKm: 3.4 },
+  RD1748388760: { drop: 'Koramangala 8th Block', pickup: 'Jayanagar 4th Block, 560011', dropFull: 'Koramangala 8th Block, 560095', distanceKm: 6.6 },
+  RD1748386402: { drop: 'Indiranagar 100ft Road', pickup: 'MG Road, 560001', dropFull: 'Indiranagar 100ft Road, 560038', distanceKm: 2.8 },
+}
 
-const TRIPS = [
-  { id: 'RD1748392045', name: 'Ramesh Kumar', amount: '₹120', state: 'requested', tab: 'pending',
-    drop: 'HSR Layout, Sector 2', pickup: 'Koramangala 5th Block, 560095', dropFull: 'HSR Layout Sector 2, 560102',
-    caption: '10 min ago', rideMeta: 'Bike · 5.2 km · Today, 6:12 PM', hours: 0.2 },
-  { id: 'RD1748391884', name: 'Anjali Shetty', amount: '₹220', state: 'covered', tab: 'pending',
-    drop: 'MG Road Metro', pickup: 'Indiranagar 12th Main, 560038', dropFull: 'MG Road Metro Station, 560001',
-    caption: 'Yesterday, 8:30 PM', rideMeta: 'Auto · 7.8 km · Yesterday, 8:30 PM', hours: 21 },
-  { id: 'RD1748390977', name: 'Kavya Iyer', amount: '₹95', state: 'requested', tab: 'pending',
-    drop: 'Jayanagar 4th Block', pickup: 'BTM Layout 2nd Stage, 560076', dropFull: 'Jayanagar 4th Block, 560011',
-    caption: '4 days ago', rideMeta: 'Bike · 4.1 km · 27 Aug, 9:20 PM', hours: 98 },
-  { id: 'RD1748390211', name: 'Vikram Rao', amount: '₹95', state: 'recovered', tab: 'resolved',
-    drop: 'Silk Board Junction', pickup: 'BTM Layout 1st Stage, 560029', dropFull: 'Silk Board Junction, 560068',
-    caption: 'Recovered · 2 days ago', rideMeta: 'Bike · 3.4 km · 29 Aug, 7:05 PM', hours: 52 },
-  { id: 'RD1748388760', name: 'Priya Menon', amount: '₹180', state: 'recovered', tab: 'resolved',
-    drop: 'Koramangala 8th Block', pickup: 'Jayanagar 4th Block, 560011', dropFull: 'Koramangala 8th Block, 560095',
-    caption: 'Recovered · 3 days ago', rideMeta: 'Auto · 6.6 km · 28 Aug, 1:40 PM', hours: 76 },
-  { id: 'RD1748386402', name: 'Suresh Babu', amount: '₹60', state: 'recovered', tab: 'resolved',
-    drop: 'Indiranagar 100ft Road', pickup: 'MG Road, 560001', dropFull: 'Indiranagar 100ft Road, 560038',
-    caption: 'Recovered · 5 days ago', rideMeta: 'Bike · 2.8 km · 26 Aug, 10:15 AM', hours: 124 },
-]
+// Maps the shared engine case state onto this screen's own badge
+// vocabulary. FLAGGED still reads as "Covered" here — the account-wide
+// rider flag is a separate axis from this ledger's payment-method
+// tracking (covered-by-Rapido vs. alternate-payment-requested), matching
+// how the existing screen never had a "flagged" visual of its own.
+const STATE_MAP = {
+  [CaseState.CONFIRMED]: 'covered',
+  [CaseState.FLAGGED]: 'covered',
+  [CaseState.ALT_PAYMENT_REQUESTED]: 'requested',
+  [CaseState.RESOLVED]: 'recovered',
+}
 
 const BADGES = {
   covered: { label: 'Covered', className: 'badge--covered' },
@@ -66,19 +70,62 @@ function initialsOf(name) {
   return name.split(' ').map((w) => w[0]).join('').slice(0, 2)
 }
 
+function relativeTime(ts) {
+  if (!ts) return ''
+  const diffMin = Math.max(0, Math.round((Date.now() - ts) / 60000))
+  if (diffMin < 1) return 'Just now'
+  if (diffMin < 60) return `${diffMin} min ago`
+  const diffHr = Math.round(diffMin / 60)
+  if (diffHr < 24) return `${diffHr} ${diffHr === 1 ? 'hour' : 'hours'} ago`
+  const diffDay = Math.round(diffHr / 24)
+  return `${diffDay} ${diffDay === 1 ? 'day' : 'days'} ago`
+}
+
+// Builds this screen's row shape from a shared engine case + its local
+// display-only enrichment. Cases still awaiting a captain decision
+// (PENDING/UNDER_REVIEW) are excluded — per the PRD, a trip only enters
+// this ledger once the captain has confirmed it as a due (or alternate
+// payment), the same "Screen 2 is the moment it's created, Screen 1 is
+// where it lives afterward" rule the existing screen already implements.
+function toRow(c) {
+  const state = STATE_MAP[c.state]
+  if (!state) return null
+  const details = TRIP_DETAILS[c.id] ?? {}
+  const hours = (Date.now() - c.createdAt) / (60 * 60 * 1000)
+  const tab = c.state === CaseState.RESOLVED ? 'resolved' : 'pending'
+  return {
+    id: c.id,
+    name: c.riderName,
+    amount: `₹${c.amount}`,
+    state,
+    tab,
+    hours,
+    drop: details.drop,
+    pickup: details.pickup,
+    dropFull: details.dropFull,
+    caption: tab === 'resolved' ? `Recovered · ${relativeTime(c.paidAt)}` : relativeTime(c.createdAt),
+    rideMeta: `${c.trip?.vehicle ?? ''} · ${details.distanceKm ?? '—'} km · ${relativeTime(c.createdAt)}`,
+    reminderCount: c.reminders?.count ?? 0,
+    thanked: c.thanked,
+    flaggedState: c.captainFlag?.flagged ?? false,
+    rating: c.rating ?? 0,
+    reviewTags: c.reviewTags ?? [],
+  }
+}
+
 // "2. Captain Dues flow.dc.html" — the captain's Dues ledger (Screen 1:
 // Pending/Resolved list) and its per-trip detail (Screen 5), toggled by
 // internal state rather than a route, exactly as the prototype does.
+// Rows now come from the shared Rapido Dues case store instead of a
+// locally hardcoded list, so this ledger and the rider's own Dues screens
+// read the same underlying cases.
 export default function DuesLedger() {
   const [tab, setTab] = useState('pending')
   const [openId, setOpenId] = useState(null)
-  const [reminders, setReminders] = useState({})
-  const [thanked, setThanked] = useState({})
-  const [flagged, setFlagged] = useState({})
-  const [ratings, setRatings] = useState({})
-  const [tags, setTags] = useState({})
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
+  const cases = useCases()
+  const { sendReminder, toggleCaptainFlag, rateAndThank } = useDuesActions()
 
   const say = useCallback((msg) => {
     clearTimeout(toastTimer.current)
@@ -86,8 +133,9 @@ export default function DuesLedger() {
     toastTimer.current = setTimeout(() => setToast(null), 2600)
   }, [])
 
-  const openTrip = TRIPS.find((t) => t.id === openId)
-  const pendingCount = TRIPS.filter((t) => t.tab === 'pending').length
+  const rows = cases.map(toRow).filter(Boolean)
+  const openRow = rows.find((r) => r.id === openId)
+  const pendingCount = rows.filter((r) => r.tab === 'pending').length
 
   const navItems = NAV_ITEMS.map((n) =>
     n.key === 'dues'
@@ -95,50 +143,44 @@ export default function DuesLedger() {
       : { ...n, href: '/home' },
   )
 
-  if (openTrip) {
+  if (openRow) {
     return (
       <DuesDetail
-        trip={openTrip}
-        reminderCount={reminders[openTrip.id] ?? 0}
-        thanked={!!thanked[openTrip.id]}
-        flaggedState={!!flagged[openTrip.id]}
-        rating={ratings[openTrip.id] ?? 0}
-        selectedTags={tags[openTrip.id] || []}
+        trip={openRow}
         toast={toast}
         onBack={() => setOpenId(null)}
         onSendReminder={() => {
-          setReminders((s) => ({ ...s, [openTrip.id]: (s[openTrip.id] ?? 0) + 1 }))
-          say(`Reminder sent to ${openTrip.name.split(' ')[0]}.`)
+          sendReminder(openRow.id)
+          say(`Reminder sent to ${openRow.name.split(' ')[0]}.`)
         }}
-        onRate={(n) => setRatings((s) => ({ ...s, [openTrip.id]: n }))}
-        onToggleTag={(label) =>
-          setTags((s) => {
-            const cur = s[openTrip.id] || []
-            const on = cur.includes(label)
-            return { ...s, [openTrip.id]: on ? cur.filter((x) => x !== label) : cur.concat(label) }
-          })
-        }
+        onRate={(n) => rateAndThank(openRow.id, { rating: n })}
+        onToggleTag={(label) => {
+          const cur = openRow.reviewTags
+          const on = cur.includes(label)
+          rateAndThank(openRow.id, { tags: on ? cur.filter((x) => x !== label) : cur.concat(label) })
+        }}
         onSendThanks={() => {
-          setThanked((s) => ({ ...s, [openTrip.id]: true }))
-          const r = ratings[openTrip.id] ?? 0
-          say(r ? `Rated ${r} ★ · thank you sent to ${openTrip.name.split(' ')[0]}.` : `Thank you sent to ${openTrip.name.split(' ')[0]}.`)
+          rateAndThank(openRow.id, { thanked: true })
+          say(openRow.rating ? `Rated ${openRow.rating} ★ · thank you sent to ${openRow.name.split(' ')[0]}.` : `Thank you sent to ${openRow.name.split(' ')[0]}.`)
         }}
         onToggleFlag={() => {
-          const next = !flagged[openTrip.id]
-          setFlagged((s) => ({ ...s, [openTrip.id]: next }))
-          say(next ? 'Sent to Rapido support for review.' : 'Flag removed.')
+          const wasFlagged = openRow.flaggedState
+          toggleCaptainFlag(openRow.id)
+          say(!wasFlagged ? 'Sent to Rapido support for review.' : 'Flag removed.')
         }}
       />
     )
   }
 
-  const src = TRIPS.filter((t) => t.tab === tab)
+  const src = rows.filter((t) => t.tab === tab)
   const pending = tab === 'pending'
-  const openTrips = TRIPS.filter((t) => t.tab === 'pending' && t.state === 'requested')
-  const coveredTrips = TRIPS.filter((t) => t.tab === 'pending' && t.state === 'covered')
+  const openTrips = rows.filter((t) => t.tab === 'pending' && t.state === 'requested')
+  const coveredTrips = rows.filter((t) => t.tab === 'pending' && t.state === 'covered')
+  const resolvedTrips = rows.filter((t) => t.tab === 'resolved')
   const sum = (list) => '₹' + list.reduce((n, t) => n + Number(t.amount.replace(/[^\d]/g, '')), 0)
   const openAmount = sum(openTrips)
   const coveredAmount = sum(coveredTrips)
+  const resolvedAmount = sum(resolvedTrips)
 
   return (
     <PhoneFrame background="#FAFAFA">
@@ -188,8 +230,8 @@ export default function DuesLedger() {
       <div className="dues__scroll">
         <div className={`stat-card${pending ? ' stat-card--pending' : ' stat-card--resolved'}`}>
           <div className="stat-card__row">
-            <span className="stat-card__amount">{pending ? openAmount : '₹335'}</span>
-            <span className="stat-card__count">{pending ? `Alternate payment · ${openTrips.length} trips` : '3 trips'}</span>
+            <span className="stat-card__amount">{pending ? openAmount : resolvedAmount}</span>
+            <span className="stat-card__count">{pending ? `Alternate payment · ${openTrips.length} trips` : `${resolvedTrips.length} trips`}</span>
           </div>
           <span className="stat-card__note">
             {pending ? "Pending with the rider. Your payout isn't affected." : 'Recovered from ride collections. Nothing outstanding.'}
@@ -271,11 +313,6 @@ export default function DuesLedger() {
 
 function DuesDetail({
   trip,
-  reminderCount,
-  thanked,
-  flaggedState,
-  rating,
-  selectedTags,
   toast,
   onBack,
   onSendReminder,
@@ -284,7 +321,8 @@ function DuesDetail({
   onSendThanks,
   onToggleFlag,
 }) {
-  const unlocked = trip.hours >= 72
+  const { reminderCount, thanked, flaggedState, rating, reviewTags: selectedTags } = trip
+  const unlocked = trip.hours >= FLAG_ELIGIBLE_HOURS
   const open = trip.state !== 'recovered'
   const showRemind = open && trip.state !== 'covered'
   const showThanks = trip.state === 'recovered'
@@ -305,7 +343,7 @@ function DuesDetail({
     ? 'Rapido support will look into this due and get back to you.'
     : unlocked
       ? 'This due has been open for more than 72 hours. You can send it to Rapido support for review.'
-      : `Available once a due stays open for 72 hours. ${Math.max(1, Math.ceil(72 - trip.hours))}h to go.`
+      : `Available once a due stays open for 72 hours. ${Math.max(1, Math.ceil(FLAG_ELIGIBLE_HOURS - trip.hours))}h to go.`
 
   return (
     <PhoneFrame background="#FAFAFA">

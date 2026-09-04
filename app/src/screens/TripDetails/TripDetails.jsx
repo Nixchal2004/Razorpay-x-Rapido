@@ -14,6 +14,7 @@ import StatusBar from '../../components/StatusBar'
 import EmergencySheet from './EmergencySheet'
 import { useHaptics } from '../../hooks/useHaptics'
 import mapImage from '../../assets/map-bangalore.png'
+import { FLOOR_LIMIT } from '../../state/duesEngine'
 import './TripDetails.css'
 
 const RIDER = {
@@ -24,6 +25,19 @@ const RIDER = {
   pickup: 'Koramangala,\nBangalore - 560034',
   drop: 'HSR Sector 2,\nBangalore - 560102',
   fare: '₹120.00',
+}
+
+// The case this trip's Emergency flow operates on — same trip ID/amount
+// used identically (independently) by the Captain ledger and Rider dues
+// screens' original mock data, so it's the natural shared id to seed the
+// live Detect -> Diagnose -> Decide demo case under.
+const CASE_ID = 'RD1748392045'
+const TRIP_META = {
+  riderName: RIDER.name,
+  amount: 120,
+  floorLimit: FLOOR_LIMIT,
+  trip: { vehicle: 'Bike', route: 'Koramangala 5th Block → HSR Layout', shortRoute: 'Koramangala → HSR Layout' },
+  trust: { rating: 4.8, ridesTogether: 12, duesSettled: 4, duesEscalated: 0 },
 }
 
 export default function TripDetails() {
@@ -177,6 +191,8 @@ export default function TripDetails() {
           onOpenChange={setSheetOpen}
           onNotify={notify}
           onFindNewRides={() => navigate('/home')}
+          caseId={CASE_ID}
+          tripMeta={TRIP_META}
         />
 
         {toast && (
