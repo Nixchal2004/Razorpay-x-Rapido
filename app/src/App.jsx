@@ -9,6 +9,11 @@ import RiderFlagWarningSplash from './screens/RiderFlagWarningSplash/RiderFlagWa
 import RiderFlagWarning from './screens/RiderFlagWarning/RiderFlagWarning'
 import RiderRestrictedSplash from './screens/RiderRestrictedSplash/RiderRestrictedSplash'
 import RiderAccountRestricted from './screens/RiderAccountRestricted/RiderAccountRestricted'
+import RiderHomeSplash from './screens/RiderHomeSplash/RiderHomeSplash'
+import RiderHome from './screens/RiderHome/RiderHome'
+import RiderDuesDashboard from './screens/RiderDuesDashboard/RiderDuesDashboard'
+import RiderDues from './screens/RiderDues/RiderDues'
+import RiderDuesCleared from './screens/RiderDuesCleared/RiderDuesCleared'
 
 // --- Captain side: two independent use cases from the handoff, each with
 // its own entry point — neither one runs through the other:
@@ -46,9 +51,8 @@ import RiderAccountRestricted from './screens/RiderAccountRestricted/RiderAccoun
 //     "5. Rider Flag Warning.dc.html":        /rider/flag-warning -> RiderFlagWarning
 //       (warning modal -> payment-method sheet -> success panel, all in one
 //       component. "View flagged dues" and the Dues nav item target
-//       "4. Rider Dues Dashboard.dc.html", out of scope for this flow, so
-//       /rider/dues-dashboard is reserved but unimplemented, same treatment
-//       as other out-of-scope targets)
+//       "4. Rider Dues Dashboard.dc.html", implemented as part of the Home
+//       flow below at /rider/dues-dashboard)
 //
 //   Use case 3 — Account Restricted flow:
 //     "R. Final Restricted Splash.dc.html":  /rider/restricted-splash -> RiderRestrictedSplash
@@ -58,6 +62,32 @@ import RiderAccountRestricted from './screens/RiderAccountRestricted/RiderAccoun
 //       panel. Its own "Book a ride" targets
 //       "3. Rider Home Dues Popup.dc.html", out of scope for this flow, so
 //       /rider/home-dues-popup is reserved but unimplemented)
+//
+//   Use case 4 — Home flow:
+//     "R. Final Splash.dc.html":            /rider/home-splash -> RiderHomeSplash
+//     "3. Rider Home Dues Popup.dc.html":   /rider/home -> RiderHome
+//       (the actual rider home screen — map, pickup point, search, recent
+//       places, bottom nav — with the dues popup card added on top, per the
+//       source's own instruction to leave the rest of the screen untouched.
+//       The card has no dismiss control in the source markup, so it's
+//       always visible here too. Tapping the card or the Dues nav item
+//       targets the Dues Dashboard below — the same destination the Flag
+//       Warning flow's "View flagged dues" and Dues nav item also target)
+//     "4. Rider Dues Dashboard.dc.html":    /rider/dues-dashboard -> RiderDuesDashboard
+//       (Pending/Flagged/Settled tabs over the full due list. The flag
+//       strip's "Screen 8" destination is a stub in the source itself — a
+//       toast, not a real screen — reproduced literally)
+//     "Rider Dues.dc.html":                 /rider/dues -> RiderDues
+//       (every pending row's target, regardless of which row was tapped —
+//       the source never passes an id/amount through, so this is always
+//       the same fixed pending-due detail screen)
+//     "7. Rider Dues Cleared.dc.html":      /rider/dues-cleared -> RiderDuesCleared
+//       (reached from paying a due in either RiderDuesDashboard or
+//       RiderDues; only `?amount=` is passed by either caller, so the
+//       source's `hardBlock` prop always falls back to its own default of
+//       `true` and this screen always shows "Flag removed" copy — even
+//       when clearing an ordinary pending due, not a flagged one. Kept
+//       literal rather than corrected.)
 export default function App() {
   return (
     <BrowserRouter>
@@ -76,6 +106,11 @@ export default function App() {
         <Route path="/rider/flag-warning" element={<RiderFlagWarning />} />
         <Route path="/rider/restricted-splash" element={<RiderRestrictedSplash />} />
         <Route path="/rider/account-restricted" element={<RiderAccountRestricted />} />
+        <Route path="/rider/home-splash" element={<RiderHomeSplash />} />
+        <Route path="/rider/home" element={<RiderHome />} />
+        <Route path="/rider/dues-dashboard" element={<RiderDuesDashboard />} />
+        <Route path="/rider/dues" element={<RiderDues />} />
+        <Route path="/rider/dues-cleared" element={<RiderDuesCleared />} />
       </Routes>
     </BrowserRouter>
   )

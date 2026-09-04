@@ -40,10 +40,7 @@ const NAV_ITEMS = [
   { key: 'profile', label: 'Profile', Icon: UserRound },
 ]
 
-// "4. Rider Dues Dashboard.dc.html" is out of scope for this flow (only the
-// splash + this popup were asked for) — the route is reserved but
-// unimplemented, matching how prior out-of-scope destinations were left in
-// this app.
+// "4. Rider Dues Dashboard.dc.html", implemented as part of the Home flow.
 const DUES_DASHBOARD_ROUTE = '/rider/dues-dashboard'
 
 // Rider Flag Warning popup — port of `5. Rider Flag Warning.dc.html`. Sits
