@@ -98,7 +98,7 @@ export default function Launcher() {
           <span className="launcher__wordmark-text">rapido</span>
           <span className="launcher__wordmark-dot" />
         </div>
-        <span className="launcher__title">Setu — prototype flows</span>
+        <span className="launcher__title">Rapido Dues</span>
         <span className="launcher__subtitle">Pick a flow below to preview it end to end.</span>
       </div>
 
