@@ -1,0 +1,86 @@
+@keyframes rfwsMark {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rfwsDot {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  40% {
+    transform: translateY(-7px);
+    opacity: 1;
+  }
+}
+
+.rfws {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+}
+
+.rfws__statusbar {
+  flex-shrink: 0;
+}
+
+.rfws__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+}
+
+.rfws__mark {
+  background: var(--rapido-yellow);
+  border-radius: 999px;
+  padding: 22px 44px;
+  animation: rfwsMark 420ms ease both;
+}
+
+.rfws__mark span {
+  display: block;
+  font-weight: 800;
+  font-size: 46px;
+  line-height: 52px;
+  letter-spacing: -1.4px;
+  color: #111111;
+}
+
+.rfws__loader {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.rfws__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--rapido-black);
+  animation: rfwsDot 1s ease-in-out infinite;
+}
+
+.rfws__spacer {
+  height: 34px;
+  flex-shrink: 0;
+}

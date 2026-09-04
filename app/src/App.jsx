@@ -5,6 +5,8 @@ import CaptainHome from './screens/CaptainHome/CaptainHome'
 import DuesLedger from './screens/DuesLedger/DuesLedger'
 import RiderTripDetails from './screens/RiderTripDetails/RiderTripDetails'
 import RiderFareMovedToDues from './screens/RiderFareMovedToDues/RiderFareMovedToDues'
+import RiderFlagWarningSplash from './screens/RiderFlagWarningSplash/RiderFlagWarningSplash'
+import RiderFlagWarning from './screens/RiderFlagWarning/RiderFlagWarning'
 
 // --- Captain side: two independent use cases from the handoff, each with
 // its own entry point — neither one runs through the other:
@@ -36,6 +38,15 @@ import RiderFareMovedToDues from './screens/RiderFareMovedToDues/RiderFareMovedT
 //
 // RiderFareMovedToDues' own CTA ("Find new rides") links to Captain Home in
 // the source — reproduced literally rather than corrected.
+//
+//   Use case 2 — Flag Warning flow:
+//     "R. Final Flag Warning Splash.dc.html": /rider/flag-warning-splash -> RiderFlagWarningSplash
+//     "5. Rider Flag Warning.dc.html":        /rider/flag-warning -> RiderFlagWarning
+//       (warning modal -> payment-method sheet -> success panel, all in one
+//       component. "View flagged dues" and the Dues nav item target
+//       "4. Rider Dues Dashboard.dc.html", out of scope for this flow, so
+//       /rider/dues-dashboard is reserved but unimplemented, same treatment
+//       as other out-of-scope targets)
 export default function App() {
   return (
     <BrowserRouter>
@@ -50,6 +61,8 @@ export default function App() {
         <Route path="/dues" element={<DuesLedger />} />
         <Route path="/rider/emergency" element={<RiderTripDetails />} />
         <Route path="/rider/fare-moved-to-dues" element={<RiderFareMovedToDues />} />
+        <Route path="/rider/flag-warning-splash" element={<RiderFlagWarningSplash />} />
+        <Route path="/rider/flag-warning" element={<RiderFlagWarning />} />
       </Routes>
     </BrowserRouter>
   )
