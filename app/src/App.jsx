@@ -7,6 +7,8 @@ import RiderTripDetails from './screens/RiderTripDetails/RiderTripDetails'
 import RiderFareMovedToDues from './screens/RiderFareMovedToDues/RiderFareMovedToDues'
 import RiderFlagWarningSplash from './screens/RiderFlagWarningSplash/RiderFlagWarningSplash'
 import RiderFlagWarning from './screens/RiderFlagWarning/RiderFlagWarning'
+import RiderRestrictedSplash from './screens/RiderRestrictedSplash/RiderRestrictedSplash'
+import RiderAccountRestricted from './screens/RiderAccountRestricted/RiderAccountRestricted'
 
 // --- Captain side: two independent use cases from the handoff, each with
 // its own entry point — neither one runs through the other:
@@ -47,6 +49,15 @@ import RiderFlagWarning from './screens/RiderFlagWarning/RiderFlagWarning'
 //       "4. Rider Dues Dashboard.dc.html", out of scope for this flow, so
 //       /rider/dues-dashboard is reserved but unimplemented, same treatment
 //       as other out-of-scope targets)
+//
+//   Use case 3 — Account Restricted flow:
+//     "R. Final Restricted Splash.dc.html":  /rider/restricted-splash -> RiderRestrictedSplash
+//     "R. Final Account Restricted.dc.html": /rider/account-restricted -> RiderAccountRestricted
+//       (full-screen hard gate, no dismiss -> payment-method sheet ->
+//       success panel, same in-place treatment as Flag Warning's success
+//       panel. Its own "Book a ride" targets
+//       "3. Rider Home Dues Popup.dc.html", out of scope for this flow, so
+//       /rider/home-dues-popup is reserved but unimplemented)
 export default function App() {
   return (
     <BrowserRouter>
@@ -63,6 +74,8 @@ export default function App() {
         <Route path="/rider/fare-moved-to-dues" element={<RiderFareMovedToDues />} />
         <Route path="/rider/flag-warning-splash" element={<RiderFlagWarningSplash />} />
         <Route path="/rider/flag-warning" element={<RiderFlagWarning />} />
+        <Route path="/rider/restricted-splash" element={<RiderRestrictedSplash />} />
+        <Route path="/rider/account-restricted" element={<RiderAccountRestricted />} />
       </Routes>
     </BrowserRouter>
   )
