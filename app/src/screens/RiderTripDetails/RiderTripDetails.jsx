@@ -23,8 +23,7 @@ const EMERGENCY_CODE = 'ABC123'
 const AUTO_ADVANCE_MS = 5000
 
 // Where this screen leads once the trip's payment fails to settle.
-// "C. Final Fare Moved to Dues.dc.html" is out of scope for this step — the
-// route is reserved but intentionally has no <Route> yet.
+// "C. Final Fare Moved to Dues.dc.html", implemented as RiderFareMovedToDues.
 const NEXT_ROUTE = '/rider/fare-moved-to-dues'
 
 // Rider-flow trip-details screen — port of `R. Final Emergency.dc.html`.

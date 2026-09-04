@@ -46,10 +46,8 @@ const METHODS = [
   { id: 'netbanking', label: 'Net banking', Icon: Landmark },
 ]
 
-// "3. Rider Home Dues Popup.dc.html" is out of scope for this flow — the
-// route is reserved but unimplemented, matching how prior out-of-scope
-// destinations were left in this app.
-const HOME_ROUTE = '/rider/home-dues-popup'
+// "3. Rider Home Dues Popup.dc.html", implemented as part of the Home flow.
+const HOME_ROUTE = '/rider/home'
 
 // Rider Account Restricted — port of `R. Final Account Restricted.dc.html`.
 // A full-screen hard gate (no back, no dismiss, matching the source

@@ -235,7 +235,7 @@ export default function EmergencySheet({
               >
                 {after === 'alt' ? 'Confirm & request payment' : 'Confirm & mark as due'}
               </button>
-              <button type="button" className="btn btn--link" onClick={goReview}>
+              <button type="button" className="btn btn--link-muted" onClick={goReview}>
                 Go back
               </button>
             </div>
@@ -267,7 +267,7 @@ export default function EmergencySheet({
               >
                 Find new rides
               </button>
-              <button type="button" className="btn btn--link" onClick={reportIssue}>
+              <button type="button" className="btn btn--link-muted" onClick={reportIssue}>
                 Report an issue
               </button>
             </div>
@@ -304,7 +304,7 @@ export default function EmergencySheet({
                   Request alternate payment
                 </button>
               )}
-              <button type="button" className="btn btn--link" onClick={goReview}>
+              <button type="button" className="btn btn--link-muted" onClick={goReview}>
                 Go back
               </button>
             </div>

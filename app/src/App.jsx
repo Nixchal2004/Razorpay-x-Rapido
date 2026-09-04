@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Launcher from './screens/Launcher/Launcher'
 import TripDetails from './screens/TripDetails/TripDetails'
 import Splash from './screens/Splash'
 import CaptainHome from './screens/CaptainHome/CaptainHome'
@@ -15,11 +16,16 @@ import RiderDuesDashboard from './screens/RiderDuesDashboard/RiderDuesDashboard'
 import RiderDues from './screens/RiderDues/RiderDues'
 import RiderDuesCleared from './screens/RiderDuesCleared/RiderDuesCleared'
 
+// --- Launcher: the app's single top-level entry point (/). Not part of
+// any prototype — connects the 7 otherwise-isolated flow entry points
+// below (nothing in the app links into any of them) so the whole bundle
+// is reachable as one navigable demo instead of only by typing a URL.
+//
 // --- Captain side: two independent use cases from the handoff, each with
 // its own entry point — neither one runs through the other:
 //
 //   Use case 1 — Emergency flow:
-//     "C. Final Emergency.dc.html":  /       -> Trip Details -> Emergency sheet -> outcome
+//     "C. Final Emergency.dc.html":  /captain/emergency -> Trip Details -> Emergency sheet -> outcome
 //     "C. Final Splash.dc.html":     /splash -> Splash (auto-advances)
 //
 //   Use case 2 — Dues ledger flow:
@@ -92,7 +98,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<TripDetails />} />
+        <Route path="/" element={<Launcher />} />
+        <Route path="/captain/emergency" element={<TripDetails />} />
         <Route path="/splash" element={<Splash />} />
         <Route path="/home" element={<CaptainHome />} />
         <Route

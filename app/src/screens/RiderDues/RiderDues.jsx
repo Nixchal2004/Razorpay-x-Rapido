@@ -108,8 +108,8 @@ export default function RiderDues() {
             </div>
           </div>
 
-          <div className="status-card">
-            <span className="status-card__title">Trip status</span>
+          <div className="trip-status-card">
+            <span className="trip-status-card__title">Trip status</span>
             <div className="timeline">
               {STEPS.map((step, i) => (
                 <div key={step.title} className="timeline__row">

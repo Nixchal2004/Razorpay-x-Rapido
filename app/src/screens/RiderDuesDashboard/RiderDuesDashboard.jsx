@@ -237,7 +237,7 @@ export default function RiderDuesDashboard() {
               <button type="button" className="btn btn--primary" onClick={confirmPay}>
                 Pay {payRow.amount}
               </button>
-              <button type="button" className="btn btn--link" onClick={() => setPayRow(null)}>
+              <button type="button" className="btn btn--link-muted" onClick={() => setPayRow(null)}>
                 Go back
               </button>
             </div>

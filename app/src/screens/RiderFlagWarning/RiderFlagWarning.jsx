@@ -52,7 +52,10 @@ const DUES_DASHBOARD_ROUTE = '/rider/dues-dashboard'
 // own fully-authored "done" state — that state's markup lives right there
 // in the same file, unreachable only because of how the source wires the
 // button. Wired here to actually show it in place instead, so the flow is
-// self-contained and the success panel is reachable.
+// self-contained and the success panel is reachable. Its "Book a ride" CTA
+// gets its own handler (navigate to Rider Home) rather than reusing
+// `dismiss` — reusing it originally meant this button fired the "remind you
+// later, flag still active" toast right after showing "flag removed".
 export default function RiderFlagWarning() {
   const navigate = useNavigate()
   const [step, setStep] = useState('warning')
@@ -73,6 +76,8 @@ export default function RiderFlagWarning() {
     setStep('none')
     say("We'll remind you later. Your flag is still active.")
   }
+
+  const bookRide = () => navigate('/rider/home')
 
   return (
     <PhoneFrame background="#FFFFFF">
@@ -191,7 +196,7 @@ export default function RiderFlagWarning() {
                 <span className="done-card__note">
                   You're all clear. Nothing is pending on your account and you can book rides as usual.
                 </span>
-                <button type="button" className="btn btn--primary" onClick={dismiss}>
+                <button type="button" className="btn btn--primary" onClick={bookRide}>
                   Book a ride
                 </button>
               </div>

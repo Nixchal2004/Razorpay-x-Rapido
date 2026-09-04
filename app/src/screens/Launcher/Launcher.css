@@ -1,0 +1,130 @@
+.launcher {
+  width: 390px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 8px 4px 40px;
+}
+
+.launcher__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 4px 4px;
+}
+
+.launcher__wordmark {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.launcher__wordmark-text {
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--rapido-black);
+}
+
+.launcher__wordmark-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rapido-yellow);
+}
+
+.launcher__title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+  color: var(--rapido-black);
+  padding-top: 6px;
+}
+
+.launcher__subtitle {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--gray-600);
+}
+
+.launcher__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.launcher__section-label {
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--gray-500);
+  padding: 0 4px;
+}
+
+.launcher__list {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px var(--border-card);
+  overflow: hidden;
+}
+
+.launcher-row {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: background 180ms ease;
+}
+
+.launcher-row:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.launcher-row:active {
+  background: var(--gray-100);
+}
+
+.launcher-row--divider {
+  box-shadow: inset 0 -1px 0 var(--border-card);
+}
+
+.launcher-row__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--rapido-yellow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.launcher-row__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.launcher-row__title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--rapido-black);
+}
+
+.launcher-row__note {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--gray-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

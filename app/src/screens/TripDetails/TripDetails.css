@@ -340,31 +340,9 @@
   padding-top: 2px;
 }
 
-.btn {
-  width: 100%;
-  min-height: 48px;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 180ms ease;
-  padding: 0 16px;
-}
-
-.btn--primary {
-  border: 0;
-  background: var(--rapido-yellow);
-  color: var(--rapido-black);
-}
-
-.btn--primary:active {
-  background: var(--rapido-yellow-dark);
-}
+/* .btn, .btn--primary, .btn--secondary, .btn:disabled: shared in index.css.
+   .btn--link-muted (index.css) covers EmergencySheet's "Go back" / "Report
+   an issue" — this screen's own addition is just its emergency variant. */
 
 .btn--emergency {
   border: 1px solid var(--gray-200);
@@ -374,34 +352,6 @@
 
 .btn--emergency:active {
   background: var(--error-light);
-}
-
-.btn--secondary {
-  border: 1px solid var(--rapido-black);
-  background: transparent;
-  color: var(--rapido-black);
-}
-
-.btn--secondary:active {
-  background: var(--gray-100);
-}
-
-.btn--link {
-  width: 100%;
-  min-height: 44px;
-  border: 0;
-  background: transparent;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 18px;
-  color: var(--gray-600);
-  cursor: pointer;
-}
-
-.btn:disabled {
-  background: var(--gray-200);
-  color: var(--gray-400);
-  cursor: not-allowed;
 }
 
 /* Home indicator */

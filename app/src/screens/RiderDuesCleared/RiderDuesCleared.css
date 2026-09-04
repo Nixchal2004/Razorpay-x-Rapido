@@ -116,30 +116,10 @@
   padding: 12px 20px 16px;
 }
 
-.btn {
-  width: 100%;
-  font-family: inherit;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 16px;
-  transition: background 180ms ease;
-}
-
-.btn--primary {
+/* .btn, .btn--primary: shared in index.css. This screen's CTA is 50px
+   tall per its source (vs. the shared 48px default) — scoped override. */
+.rdc .btn--primary {
   min-height: 50px;
-  border-radius: 12px;
-  border: 0;
-  background: var(--rapido-yellow);
-  color: var(--rapido-black);
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 20px;
-}
-
-.btn--primary:active {
-  background: var(--rapido-yellow-dark);
 }
 
 .rdc__home-indicator {
