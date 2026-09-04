@@ -1,0 +1,86 @@
+@keyframes splashMark {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes splashDot {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  40% {
+    transform: translateY(-7px);
+    opacity: 1;
+  }
+}
+
+.splash {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.splash__statusbar {
+  flex-shrink: 0;
+}
+
+.splash__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  padding-bottom: 70px;
+}
+
+.splash__mark {
+  background: #fbcb2b;
+  border-radius: 999px;
+  padding: 26px 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: splashMark 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.splash__mark span {
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -1.6px;
+  color: var(--rapido-black);
+}
+
+.splash__loader {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.splash__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--rapido-black);
+  animation: splashDot 1s ease-in-out infinite;
+}
+
+.splash__tap-target {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
