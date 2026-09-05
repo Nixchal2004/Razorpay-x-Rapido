@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { Check, CreditCard, Flag, Info, Landmark, Lock, Smartphone } from 'lucide-react'
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
-import { FLAG_LIMIT, RETRIEVAL_FEE } from '../../state/duesEngine'
+import { useCases, useDuesActions } from '../../state/DuesContext'
+import { CaseState, FLAG_LIMIT, RETRIEVAL_FEE } from '../../state/duesEngine'
 import './RiderAccountRestricted.css'
 
 // This screen demonstrates the 3-flag hard gate and is independently
@@ -16,14 +17,19 @@ import './RiderAccountRestricted.css'
 // amount combinations already used elsewhere in the project's seed data
 // (see duesEngine.js's seedCases) rather than inventing new figures.
 // FLAG_LIMIT/RETRIEVAL_FEE are read-only imports of the engine's own
-// constants — this screen never reads or writes any live case/account
-// state, and paying here never calls a real Dues action (see confirmPay):
-// it is a self-contained presentation of this one gate scenario, so nothing
-// it does can ever contradict what the shared engine shows elsewhere.
+// constants. Each fixture entry also carries the id of the real case it
+// was modeled on (`realCaseId`) — confirmPay verifies that case still
+// genuinely exists and is outstanding (CONFIRMED/FLAGGED) before calling
+// the existing payDue action on it, so a successful payment here actually
+// resolves the same cases elsewhere in the app (e.g. Rider Home's dues
+// notification) instead of leaving them contradicting this screen's own
+// "all flags cleared" success message. A fixture entry whose real case is
+// no longer outstanding (already resolved, unrelated to this flow) is
+// simply skipped — never invented, never double-charged.
 const FIXTURE_FLAGGED_DUES = [
-  { id: 'fixture-1', vehicle: 'Bike', route: 'BTM Layout → Jayanagar 4th Block', amount: 95, flaggedAt: Date.now() - 4 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
-  { id: 'fixture-2', vehicle: 'Auto', route: 'Indiranagar → MG Road Metro', amount: 220, flaggedAt: Date.now() - 2 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
-  { id: 'fixture-3', vehicle: 'Auto', route: 'Jayanagar → Koramangala 8th Block', amount: 180, flaggedAt: Date.now() - 1 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
+  { id: 'fixture-1', realCaseId: 'RD1748390977', vehicle: 'Bike', route: 'BTM Layout → Jayanagar 4th Block', amount: 95, flaggedAt: Date.now() - 4 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
+  { id: 'fixture-2', realCaseId: 'RD1748391884', vehicle: 'Auto', route: 'Indiranagar → MG Road Metro', amount: 220, flaggedAt: Date.now() - 2 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
+  { id: 'fixture-3', realCaseId: 'RD1748388760', vehicle: 'Auto', route: 'Jayanagar → Koramangala 8th Block', amount: 180, flaggedAt: Date.now() - 1 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
 ]
 
 const METHODS = [
@@ -54,6 +60,8 @@ export default function RiderAccountRestricted() {
   const navigate = useNavigate()
   const [step, setStep] = useState('gate')
   const [method, setMethod] = useState('upi')
+  const cases = useCases()
+  const { payDue } = useDuesActions()
 
   const dues = FIXTURE_FLAGGED_DUES.map((d) => ({
     id: d.id,
@@ -69,13 +77,18 @@ export default function RiderAccountRestricted() {
   const totalAmount = duesTotalAmount + RETRIEVAL_FEE
   const total = `₹${totalAmount}`
 
-  // Paying here never touches the shared Dues engine — see the top-of-file
-  // note. This screen's three dues are a fixed local fixture, not real
-  // cases, so there is nothing genuine for a real payDue/payBlockedAccount
-  // call to resolve; showing the same fixture total back on the success
-  // panel keeps this screen internally consistent instead of clearing an
-  // unrelated real case elsewhere.
+  // For each fixture entry, resolve the real case it was modeled on — but
+  // only if that case still genuinely exists and is outstanding
+  // (CONFIRMED/FLAGGED). This keeps Home/Dues Dashboard/etc. from still
+  // showing these same dues as pending after this screen's "all flags
+  // cleared" success message. The ₹29 retrieval fee is never treated as
+  // a dues case — it's a separate flat fee, not looped over here.
   const confirmPay = () => {
+    for (const d of FIXTURE_FLAGGED_DUES) {
+      const realCase = cases.find((c) => c.id === d.realCaseId)
+      const stillOutstanding = realCase && (realCase.state === CaseState.CONFIRMED || realCase.state === CaseState.FLAGGED)
+      if (stillOutstanding) payDue(d.realCaseId, method)
+    }
     setStep('done')
   }
 
