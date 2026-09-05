@@ -5,23 +5,20 @@ import {
   ChevronRight,
   Flag,
   Lock,
-  ReceiptText,
   UserRound,
 } from 'lucide-react'
 import './Launcher.css'
 
+// Dues ledger flow removed from this list per the Captain launcher scope
+// change — the route (/dues/splash, /dues) and the DuesLedger screen
+// itself are untouched and still fully reachable, just no longer listed
+// here as a separate top-level Captain use case.
 const CAPTAIN_FLOWS = [
   {
     Icon: AlertTriangle,
     title: 'Emergency flow',
     note: 'Trip details → Emergency sheet → outcome',
     to: '/captain/emergency',
-  },
-  {
-    Icon: ReceiptText,
-    title: 'Dues ledger flow',
-    note: 'Splash → Pending/Resolved ledger → trip detail',
-    to: '/dues/splash',
   },
   {
     Icon: Bike,

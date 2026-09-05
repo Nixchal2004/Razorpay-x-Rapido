@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Bell, ChevronRight, Bike, ShieldCheck } from 'lucide-react'
+import { Bell, ChevronRight, Bike, ShieldCheck, MapPin, Flag } from 'lucide-react'
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
 import mapImage from '../../assets/map-bangalore.png'
 import incentiveBadge from '../../assets/badge-incentive-helmet.png'
 import referIllustration from '../../assets/illustration-refer-earn.png'
 import { NAV_ITEMS } from './navItems'
+import { useCase, useDuesActions } from '../../state/DuesContext'
 import './CaptainHome.css'
 
 const PINS = [
@@ -15,10 +16,37 @@ const PINS = [
   { top: 210, left: 108 },
 ]
 
+// The existing alternate-payment due (Kavya Iyer, ₹95, 4 days old) that
+// the Captain can flag for review — same case id/data DuesLedger.jsx
+// already tracks, read live from the shared engine (not a second Dues
+// implementation). Drop location is display-only enrichment, matching
+// the same value DuesLedger.jsx's own local TRIP_DETAILS map uses for
+// this case.
+const FLAG_CASE_ID = 'RD1748390977'
+const FLAG_CASE_LOCATION = 'Jayanagar 4th Block'
+
+function initialsOf(name) {
+  return name.split(' ').map((w) => w[0]).join('').slice(0, 2)
+}
+
+function relativeTime(ts) {
+  if (!ts) return ''
+  const diffMin = Math.max(0, Math.round((Date.now() - ts) / 60000))
+  if (diffMin < 1) return 'Just now'
+  if (diffMin < 60) return `${diffMin} min ago`
+  const diffHr = Math.round(diffMin / 60)
+  if (diffHr < 24) return `${diffHr} ${diffHr === 1 ? 'hour' : 'hours'} ago`
+  const diffDay = Math.round(diffHr / 24)
+  return `${diffDay} ${diffDay === 1 ? 'day' : 'days'} ago`
+}
+
 // "0. Captain Home.dc.html" — the captain's home screen. Terminal
 // destination for both the Emergency and Splash flows.
 export default function CaptainHome() {
   const [online, setOnline] = useState(true)
+  const flagCase = useCase(FLAG_CASE_ID)
+  const { toggleCaptainFlag } = useDuesActions()
+  const isFlagged = flagCase?.captainFlag?.flagged ?? false
 
   const toggleOnline = () => {
     if (navigator.vibrate) navigator.vibrate(8)
@@ -142,6 +170,54 @@ export default function CaptainHome() {
               <span className="status-card__toggle-knob" />
             </button>
           </div>
+
+          {flagCase && (
+            <>
+              <span className="dues__section-label" style={{ padding: '0 16px' }}>
+                CURRENT TRIP
+              </span>
+              <div className="dues-list" style={{ margin: '0 16px', flexShrink: 0 }}>
+                <div className="dues-row">
+                  <div className="dues-row__top">
+                    <div className="dues-row__bubble bubble--requested">
+                      <span>{initialsOf(flagCase.riderName)}</span>
+                    </div>
+                    <Link to="/dues" className="dues-row__body" style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <div className="dues-row__head">
+                        <span className="dues-row__name">{flagCase.riderName}</span>
+                        <span className="dues-row__amount">₹{flagCase.amount}</span>
+                      </div>
+                      <div className="dues-row__drop">
+                        <MapPin size={13} color="#AAAAAA" />
+                        <span>{FLAG_CASE_LOCATION}</span>
+                      </div>
+                      <div className="dues-row__meta">
+                        <span className="badge badge--requested">Alternate payment</span>
+                        <span className="dues-row__caption">{relativeTime(flagCase.createdAt)}</span>
+                      </div>
+                    </Link>
+                    <button
+                      type="button"
+                      aria-label={isFlagged ? 'Remove flag' : 'Flag this rider'}
+                      onClick={() => toggleCaptainFlag(FLAG_CASE_ID)}
+                      style={{
+                        border: 0,
+                        background: 'transparent',
+                        padding: 8,
+                        marginRight: -8,
+                        flexShrink: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Flag size={17} color={isFlagged ? '#EA4335' : '#1A1A1A'} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="tile-row">
             <div className="tile">
