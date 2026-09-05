@@ -3,19 +3,29 @@ import { useNavigate } from 'react-router-dom'
 import { Check, CreditCard, Flag, Info, Landmark, Lock, Smartphone } from 'lucide-react'
 import PhoneFrame from '../../components/PhoneFrame'
 import StatusBar from '../../components/StatusBar'
-import { useAccountStatus, useDuesActions } from '../../state/DuesContext'
-import { FLAG_LIMIT } from '../../state/duesEngine'
+import { FLAG_LIMIT, RETRIEVAL_FEE } from '../../state/duesEngine'
 import './RiderAccountRestricted.css'
 
-// AMBIGUITY / behavior note: this screen demonstrates the 3-flag hard
-// gate and is independently reachable from the Launcher without first
-// building up three real flagged cases through the interactive Emergency
-// + escalation flow. Rather than fabricate dues to always show exactly
-// three, it lists whatever is genuinely flagged right now on the shared
-// case store (often fewer than three when visited this way) — the
-// headline still cites the fixed FLAG_LIMIT rule itself (accurate
-// regardless of the live count), but the dues list, total, and the actual
-// payBlockedAccount action always reflect real data, never invented rows.
+// This screen demonstrates the 3-flag hard gate and is independently
+// reachable from the Launcher, not reached by genuinely accumulating
+// three flags through the interactive Emergency + escalation flow (the
+// shared case store rarely has exactly three flagged at once — today it
+// has one). Rather than read the live account status and show whatever
+// that happens to be, this screen presents a fixed, isolated Rider-only
+// fixture of exactly three flagged dues, reusing real vehicle/route/
+// amount combinations already used elsewhere in the project's seed data
+// (see duesEngine.js's seedCases) rather than inventing new figures.
+// FLAG_LIMIT/RETRIEVAL_FEE are read-only imports of the engine's own
+// constants — this screen never reads or writes any live case/account
+// state, and paying here never calls a real Dues action (see confirmPay):
+// it is a self-contained presentation of this one gate scenario, so nothing
+// it does can ever contradict what the shared engine shows elsewhere.
+const FIXTURE_FLAGGED_DUES = [
+  { id: 'fixture-1', vehicle: 'Bike', route: 'BTM Layout → Jayanagar 4th Block', amount: 95, flaggedAt: Date.now() - 4 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
+  { id: 'fixture-2', vehicle: 'Auto', route: 'Indiranagar → MG Road Metro', amount: 220, flaggedAt: Date.now() - 2 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
+  { id: 'fixture-3', vehicle: 'Auto', route: 'Jayanagar → Koramangala 8th Block', amount: 180, flaggedAt: Date.now() - 1 * 24 * 60 * 60 * 1000, reason: "Wasn't settled within the review window." },
+]
+
 const METHODS = [
   { id: 'upi', label: 'UPI · 9845* * *210', Icon: Smartphone },
   { id: 'card', label: 'Card ending 3467', Icon: CreditCard },
@@ -44,34 +54,28 @@ export default function RiderAccountRestricted() {
   const navigate = useNavigate()
   const [step, setStep] = useState('gate')
   const [method, setMethod] = useState('upi')
-  const [paidTotal, setPaidTotal] = useState(null)
-  const account = useAccountStatus()
-  const { payBlockedAccount } = useDuesActions()
 
-  const dues = account.flaggedCases.map((c) => ({
-    id: c.id,
-    trip: `${c.trip.vehicle} · ${new Date(c.flaggedAt ?? c.createdAt).toLocaleDateString([], { day: 'numeric', month: 'short' })}, ${new Date(c.flaggedAt ?? c.createdAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`,
-    route: c.trip.route,
-    amount: `₹${c.amount}`,
-    caption: relativeDays(c.flaggedAt),
-    reason: c.flaggedReason,
+  const dues = FIXTURE_FLAGGED_DUES.map((d) => ({
+    id: d.id,
+    trip: `${d.vehicle} · ${new Date(d.flaggedAt).toLocaleDateString([], { day: 'numeric', month: 'short' })}, ${new Date(d.flaggedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`,
+    route: d.route,
+    amount: `₹${d.amount}`,
+    caption: relativeDays(d.flaggedAt),
+    reason: d.reason,
   }))
-  const duesTotal = `₹${account.totalFlaggedAmount}`
-  // The retrieval fee only actually applies when the account is genuinely
-  // blocked (matching account.totalToClear's own logic) — shown as ₹0
-  // rather than hiding the line, so the breakdown's arithmetic stays
-  // visibly consistent (dues + fee = total) without restructuring the
-  // screen for the standalone-demo case where this fee doesn't apply yet.
-  const fee = `₹${account.blocked ? account.retrievalFee : 0}`
-  const total = `₹${account.totalToClear}`
+  const duesTotalAmount = FIXTURE_FLAGGED_DUES.reduce((sum, d) => sum + d.amount, 0)
+  const duesTotal = `₹${duesTotalAmount}`
+  const fee = `₹${RETRIEVAL_FEE}`
+  const totalAmount = duesTotalAmount + RETRIEVAL_FEE
+  const total = `₹${totalAmount}`
 
-  // account.totalToClear goes to 0 the instant payBlockedAccount clears
-  // every flagged case, so the "done" success copy captures what was
-  // actually paid *before* the action runs rather than re-reading the
-  // now-empty live total afterward.
+  // Paying here never touches the shared Dues engine — see the top-of-file
+  // note. This screen's three dues are a fixed local fixture, not real
+  // cases, so there is nothing genuine for a real payDue/payBlockedAccount
+  // call to resolve; showing the same fixture total back on the success
+  // panel keeps this screen internally consistent instead of clearing an
+  // unrelated real case elsewhere.
   const confirmPay = () => {
-    setPaidTotal(account.totalToClear)
-    payBlockedAccount(method)
     setStep('done')
   }
 
@@ -196,7 +200,7 @@ export default function RiderAccountRestricted() {
               </div>
               <span className="done-card__headline">Booking is back on</span>
               <span className="done-card__note">
-                ₹{paidTotal} paid and all flags cleared. You can book rides again right away.
+                {total} paid and all flags cleared. You can book rides again right away.
               </span>
               <button type="button" className="btn btn--primary" onClick={() => navigate(HOME_ROUTE)}>
                 Book a ride

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   AlertTriangle,
@@ -109,10 +109,12 @@ function toRow(c) {
 // Rider Dues Dashboard — port of `4. Rider Dues Dashboard.dc.html`, reached
 // from both the Home dues-popup card and the Dues nav item across the Home
 // and Flag Warning flows. Pending/Flagged/Settled tabs, an itemized due
-// list, and a payment sheet for flagged dues. The flag strip's "Screen 8 —
-// flags and account status" is authored as a stub in the source itself
-// (it shows a toast instead of navigating anywhere) — reproduced literally
-// rather than invented.
+// list, and a payment sheet for flagged dues. The flag strip (the source's
+// stub "Screen 8 — flags and account status") now switches this screen's
+// own tab to Flagged instead of showing a toast — the destination the
+// source's own copy ("2 more will pause your ability to book rides")
+// already implies, using the tab this same screen already has rather
+// than inventing a new one.
 //
 // Rows and the account flag count now come from the shared Rapido Dues
 // case store — this and the Captain ledger read the exact same cases.
@@ -126,17 +128,9 @@ export default function RiderDuesDashboard() {
   const [tab, setTab] = useState(initialTab)
   const [payRowId, setPayRowId] = useState(null)
   const [method, setMethod] = useState('upi')
-  const [toast, setToast] = useState(null)
-  const toastTimer = useRef(null)
   const cases = useCases()
   const account = useAccountStatus()
   const { payDue } = useDuesActions()
-
-  const say = useCallback((msg) => {
-    clearTimeout(toastTimer.current)
-    setToast(msg)
-    toastTimer.current = setTimeout(() => setToast(null), 2600)
-  }, [])
 
   const allRows = useMemo(() => cases.map(toRow).filter(Boolean), [cases])
   const rows = allRows.filter((r) => r.tab === tab)
@@ -165,7 +159,7 @@ export default function RiderDuesDashboard() {
         </div>
 
         {account.flagCount > 0 && (
-          <button type="button" className="rdd__flag-strip" onClick={() => say('Screen 8 — flags and account status — is not built yet.')}>
+          <button type="button" className="rdd__flag-strip" onClick={() => setTab('flagged')}>
             <AlertTriangle size={16} color="#B98A00" />
             <div className="rdd__flag-strip-text">
               <span className="rdd__flag-strip-title">
@@ -297,12 +291,6 @@ export default function RiderDuesDashboard() {
                 Go back
               </button>
             </div>
-          </div>
-        )}
-
-        {toast && (
-          <div className="rdd__toast" key={toast}>
-            <span>{toast}</span>
           </div>
         )}
       </div>
